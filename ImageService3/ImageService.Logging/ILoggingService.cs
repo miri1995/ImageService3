@@ -1,29 +1,25 @@
 ﻿using ImageService.Logging.Modal;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ImageService.Logging
 {
     /// <summary>
     /// ILoggingService interface.
-    /// manages the logging writting
+    /// responsible of the logging writing
     /// </summary>
     public interface ILoggingService
     {
         /// <summary>
         /// MessageRecieved event.
-        /// in charge of wriiting message to log
+        /// writes messages to the log
         /// </summary>
         event EventHandler<MessageRecievedEventArgs> MessageRecieved;
         /// <summary>
-        /// message function.
-        /// writes the message to log
+        /// the function is responsible of the messages.
         /// </summary>
-        /// <param name="message"> the message</param>
-        /// <param name="type">type of message</param>
+        /// <param name="message"> the message written to the log</param>
+        /// <param name="type">the type of message</param>
         void Log(string message, MessageTypeEnum type);           // Logging the Message
     }
 }

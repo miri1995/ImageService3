@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ImageService.Logging.Modal
 {
     /// <summary>
-    /// MessageRecievedEventArgs class.
-    /// manages the args for log writting
+    /// MessageRecievedEventArgs class inherits from EventArgs.
+    /// responsible on the arguments to the log
     /// </summary>
     public class MessageRecievedEventArgs : EventArgs
     {
@@ -29,7 +26,12 @@ namespace ImageService.Logging.Modal
             set { m_message = value; }
         }
         #endregion
-        
+
+        /// <summary>
+        /// MessageRecievedEventArgs constructor.
+        /// </summary>
+        ///<param name="status"> status of the message</param>
+        /// <param name="message"> message</param>
         public MessageRecievedEventArgs(MessageTypeEnum status, string message)
         {
             this.m_status = status;
