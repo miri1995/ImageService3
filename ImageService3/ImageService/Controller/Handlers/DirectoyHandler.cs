@@ -9,11 +9,13 @@ using ImageService.Server;
 
 namespace ImageService.Controller.Handlers
 {
+    
     /// <summary>
     /// Directory Handler class that Implements IDirectoryHandler Interface.
     /// </summary>
     public class DirectoyHandler : IDirectoryHandler
     {
+
         #region Members
         private IImageController m_controller;              // The Image Processing Controller
         private ILoggingService m_logging;                  // The logger

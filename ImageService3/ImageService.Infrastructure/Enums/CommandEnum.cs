@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace ImageService.Infrastructure.Enums
 {
     /// <summary>
-    /// CommandEnum.
-    /// defines different types of commands
+    /// CommandEnum
     /// </summary>
     public enum CommandEnum : int
     {
@@ -17,3 +16,4 @@ namespace ImageService.Infrastructure.Enums
 
     }
 }
+
