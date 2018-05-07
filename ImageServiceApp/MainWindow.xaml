@@ -9,16 +9,13 @@
         Title="Main App" Height="350" Width="525">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="477*"/>
-        </Grid.ColumnDefinitions>
-        <TabControl TabStripPlacement="Top" VerticalAlignment= "Stretch" Grid.ColumnSpan="2">
+        <TabControl TabStripPlacement="Top" VerticalAlignment= "Stretch">
             <TabItem Header="Settings" Height="Auto">
                 <local:SettingsWin/>
             </TabItem>
-
+            <TabItem Header="Logs">
+                <local:LogWin></local:LogWin>
+            </TabItem>
         </TabControl>
-
     </Grid>
 </Window>
