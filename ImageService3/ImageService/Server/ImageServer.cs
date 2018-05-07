@@ -68,6 +68,7 @@ namespace ImageService.Server
             {
                 m_logging.Log("Stop Server", Logging.Modal.MessageTypeEnum.INFO);
                 CloseServer?.Invoke(this, null);
+               
                 //  m_logging.Log("Leave OnCloseServer", Logging.Modal.MessageTypeEnum.INFO);
             }
             catch (Exception ex)
