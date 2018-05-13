@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ImageServiceApp;
 
-namespace ImageServiceApp.Models
+namespace ImageServiceApp.Model
 {
     class LogMessage : INotifyPropertyChanged
     {

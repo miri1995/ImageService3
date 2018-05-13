@@ -1,4 +1,5 @@
 ﻿using ImageServiceApp.Model;
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,17 +13,41 @@ using System.Threading.Tasks;
 namespace ImageServiceApp.ViewModel
 {
 
-    class LogViewModel : ILogViewModel
+    class LogViewModel : INotifyPropertyChanged, ILogViewModel
     {
+        private LogModel LogsModel;
         public event PropertyChangedEventHandler PropertyChanged;
-        private ILogModel logModel = new LogModel();
-       
-        //list of all the logs.
-        public ObservableCollection<LogEntry> VM_LogEntries
+
+
+        public LogViewModel()
         {
-            get { return this.logModel.LogEntries; }
-            set => throw new NotImplementedException();
+            LogsModel = new LogModel();
+            LogsModel.PropertyChanged +=
+               delegate (Object sender, PropertyChangedEventArgs e) {
+                   NotifyPropertyChanged(e.PropertyName);
+               };
+        }
+
+        public ObservableCollection<MessageRecievedEventArgs> LogMessageList
+        {
+            get { return LogsModel.LogMessageList; }
+        }
+
+      
+        public LogModel LogModel
+        {
+            get { return this.LogsModel; }
+            set
+            {
+                this.LogsModel = value;
             }
+        }
+
+
+        protected void NotifyPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
     }
 }

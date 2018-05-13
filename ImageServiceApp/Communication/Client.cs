@@ -12,7 +12,6 @@ namespace ImageServiceApp.Models
     public class Client: IClient
     {
         private static Client model;
-        private const int serverPort = 8000;
         private string appConfig;
         private string logs;
         private TcpClient client;
@@ -47,7 +46,7 @@ namespace ImageServiceApp.Models
 
         public void start()
         {
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), serverPort);
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
             client = new TcpClient();
             client.Connect(ep);
             Reciever();

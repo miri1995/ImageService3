@@ -9,8 +9,9 @@ using ImageServiceApp.Event;
 using ImageServiceApp.Enums;
 using ImageServiceApp.Model;
 using ImageServiceApp.Communication;
+using ImageServiceApp.Models;
 
-namespace ImageServiceApp.Models
+namespace ImageServiceApp.Model
 {
     class SettingsModel : INotifyPropertyChanged,ISettingsModel
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageServiceApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,13 @@ namespace ImageServiceApp
     /// </summary>
     public partial class SettingsWin : UserControl
     {
+        private SettingsViewModel SettingsViewModel;
+
         public SettingsWin()
         {
             InitializeComponent();
+            SettingsViewModel = new SettingsViewModel();
+            this.DataContext = SettingsViewModel;
         }
     }
 }

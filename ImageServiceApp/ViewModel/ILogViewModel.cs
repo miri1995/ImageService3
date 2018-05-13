@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageServiceApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ namespace ImageServiceApp.ViewModel
 {
     interface ILogViewModel : INotifyPropertyChanged
     {
-        ObservableCollection<LogEntry> VM_LogEntries { get; set; }
+        ObservableCollection<MessageRecievedEventArgs> LogMessageList { get;}
+        LogModel LogModel { get; set; }
     }
 }

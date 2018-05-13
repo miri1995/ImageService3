@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using ImageServiceApp;
 using ImageServiceApp.Model;
 
-namespace ImageServiceApp.Models
+namespace ImageServiceApp.Model
 {
     class LogModel : INotifyPropertyChanged, ILogModel
     {
