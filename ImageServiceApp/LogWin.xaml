@@ -7,12 +7,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Grid.ColumnDefinitions>
+
+            <Grid.ColumnDefinitions>
             <ColumnDefinition Width="463*"/>
             <ColumnDefinition Width="537*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.ColumnSpan="2">
-            <Label Content="Logs" FontSize="72" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Salmon" RenderTransformOrigin="2.634,0.921"/>
+            <Label Content="Logs" FontSize="72" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Salmon" RenderTransformOrigin="2.634,0.921" FontStyle="Italic"/>
             <DataGrid ItemsSource="{Binding VM_LogMessages}" AutoGenerateColumns="False" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Type" Width="Auto" IsReadOnly="True" Binding="{Binding Path=Type}" >
