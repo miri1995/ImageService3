@@ -7,12 +7,19 @@ using ImageServiceApp.Event;
 
 namespace ImageServiceApp.Communication
 {
+    public delegate void UpdateResponseArrived(CommandRecievedEventArgs responseObj);
+
     interface IClient
     {
-        void start();
-        void Sender(object sender, CommandRecievedEventArgs e);
-        void Disconnect();
         
+        void SendCommand(CommandRecievedEventArgs commandRecievedEventArgs);
+        
+        
+        
+        void RecieveCommand();
+        event UpdateResponseArrived UpdateResponse;
+        bool Connected { get; set; }
+        void Disconnected();
 
 
     }

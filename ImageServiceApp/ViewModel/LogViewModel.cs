@@ -1,4 +1,5 @@
-﻿using ImageServiceApp.Model;
+﻿using ImageServiceApp.Enums;
+using ImageServiceApp.Model;
 
 using System;
 using System.Collections.Generic;
@@ -13,41 +14,19 @@ using System.Threading.Tasks;
 namespace ImageServiceApp.ViewModel
 {
 
-    class LogViewModel : INotifyPropertyChanged, ILogViewModel
+   public class LogViewModel : ILogViewModel
     {
-        private LogModel LogsModel;
+        private ILogModel logModel = new LogModel();
+
         public event PropertyChangedEventHandler PropertyChanged;
+       
 
-
-        public LogViewModel()
+        // List of all the event log entries.
+        public ObservableCollection<LogEntry> LogEntries
         {
-            LogsModel = new LogModel();
-            LogsModel.PropertyChanged +=
-               delegate (Object sender, PropertyChangedEventArgs e) {
-                   NotifyPropertyChanged(e.PropertyName);
-               };
-        }
-
-        public ObservableCollection<MessageRecievedEventArgs> LogMessageList
-        {
-            get { return LogsModel.LogMessageList; }
-        }
-
-      
-        public LogModel LogModel
-        {
-            get { return this.LogsModel; }
-            set
-            {
-                this.LogsModel = value;
-            }
-        }
-
-
-        protected void NotifyPropertyChanged(string name)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            get { return this.logModel.LogEntries; }
+            set { throw new NotImplementedException(); }
+            
         }
     }
 }

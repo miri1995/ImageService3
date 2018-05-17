@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace ImageServiceApp.ViewModel
+namespace ImageServiceApp
 {
-   public class Converter :  IValueConverter
+    public class Co : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

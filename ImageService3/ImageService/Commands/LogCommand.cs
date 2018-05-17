@@ -1,31 +1,26 @@
-﻿using ImageService.Commands;
+﻿
 using ImageService.Logging;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using ImageService.Infrastructure.Enums;
+using System.Collections.ObjectModel;
 using ImageService.Modal;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ImageService3.ImageService.Commands
+namespace ImageService.Commands
 {
     class LogCommand:ICommand
     {
         private ILoggingService loggingService;
 
-
         /// <summary>
-        /// LogCommand constructor
+        /// LogCommand constructor.
         /// </summary>
-        /// <param name="loggingService"></param>
+        /// <param name="loggingService">Image service logger.</param>
         public LogCommand(ILoggingService loggingService)
         {
             this.loggingService = loggingService;
         }
-
-
-
         public string Execute(string[] args, out bool result)
         {
             try

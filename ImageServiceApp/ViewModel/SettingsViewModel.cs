@@ -4,105 +4,105 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ImageServiceApp.Model;
 using Prism.Commands;
-
-
+using ImageServiceApp.Event;
+using ImageServiceApp.Enums;
 
 namespace ImageServiceApp.ViewModel
 {
-    class SettingsViewModel:ISettingsViewModel
+   public class SettingsViewModel:ISettingsViewModel
     {
-        private SettingsModel SettingsModel;
+        private string selectedItem;
 
+        public SettingsViewModel()
+        {
+            this.model = new SettingsModel();
+            model.PropertyChanged +=
+            delegate (Object sender, PropertyChangedEventArgs e)
+            {
+                NotifyPropertyChanged("View Model" + e.PropertyName);
+
+            };
+            this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.Remove);
+
+        }
+
+        #region MVVMLogic
+        public event PropertyChangedEventHandler PropertyChanged;
+        private ISettingsModel model;
+        /// <summary>
+        /// NotifyPropertyChanged function.
+        /// invokes PropertyChanged event about change of property.
+        /// </summary>
+        /// <param name="propName">the changed property</param>
+        private void NotifyPropertyChanged(string propName)
+        {
+            PropertyChangedEventArgs propertyChangedEventArgs = new PropertyChangedEventArgs(propName);
+            this.PropertyChanged?.Invoke(this, propertyChangedEventArgs);
+        }
+        //getters and setters
+        public ObservableCollection<string> VM_Handlers
+        {
+            get { return model.Handlers; }
+        }
         public string OutputDirectory
         {
-            get { return this.SettingsModel.OutputDirectory; }
-            set
-            {
-                this.SettingsModel.OutputDirectory = value;
-            }
+            get { return model.OutputDirectory; }
         }
-
         public string SourceName
         {
-            get { return this.SettingsModel.SourceName; }
-            set
-            {
-                this.SettingsModel.SourceName = value;
-            }
+            get { return model.SourceName; }
         }
-
         public string LogName
         {
-            get { return this.SettingsModel.LogName; }
-            set
-            {
-                this.SettingsModel.LogName = value;
-            }
+            get { return model.LogName; }
         }
-
-        public string ThumbSize
+        public string TumbSize
         {
-            get { return this.SettingsModel.ThumbSize; }
-            set
-            {
-                this.SettingsModel.ThumbSize = value;
-            }
+            get { return model.TumbSize; }
         }
+        #endregion
 
-
-        public string ChosenHandler
+        #region CommandsLogic
+        public ICommand RemoveCommand { get; set; }
+        /// <summary>
+        /// OnRemove function.
+        /// tells what will happen when we press Remove button.
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnRemove(object obj)
         {
-            get { return this.SettingsModel.ChosenHandler; }
+         
+                string[] arr = { this.selectedItem };
+                CommandRecievedEventArgs eventArgs = new CommandRecievedEventArgs((int)CommandEnum.CloseHandler, arr, "");
+                this.model.GuiClient.SendCommand(eventArgs);
+          
+        }
+        /// <summary>
+        /// CanRemove function.
+        /// sets the enabeld of remove button.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        private bool Remove(object obj)
+        {
+            bool result = this.selectedItem != null ? true : false;
+            return result;
+        }
+      
+        public string SelectedItem
+        {
+            get
+            {
+                return this.selectedItem;
+            }
             set
             {
-                this.SettingsModel.ChosenHandler = value;
+                selectedItem = value;
                 var command = this.RemoveCommand as DelegateCommand<object>;
                 command.RaiseCanExecuteChanged();
             }
         }
+        #endregion
 
-        public ObservableCollection<string> Directories
-        {
-            get { return this.SettingsModel.Directories; }
-            set
-            {
-                this.SettingsModel.Directories = value;
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public SettingsViewModel()
-        {
-            SettingsModel = new SettingsModel();
-            SettingsModel.PropertyChanged +=
-               delegate (Object sender, PropertyChangedEventArgs e) {
-                   NotifyPropertyChanged("View Model" + e.PropertyName);
-               };
-            this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
-        }
-
-        public ICommand RemoveCommand { get; private set; }
-
-        private void OnRemove(object obj)
-        {
-            this.SettingsModel.sendToServer();
-        }
-
-        private bool CanRemove(object obj)
-        {
-            if (string.IsNullOrEmpty(this.SettingsModel.ChosenHandler))
-            {
-                return false;
-            }
-            return true;
-        }
-
-
-        protected void NotifyPropertyChanged(string name)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-        }
     }
 }

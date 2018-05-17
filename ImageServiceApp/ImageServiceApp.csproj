@@ -75,30 +75,32 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Co.cs" />
     <Compile Include="Communication\Client.cs" />
     <Compile Include="Communication\IClient.cs" />
     <Compile Include="Enums\CommandEnum.cs" />
-    <Compile Include="Enums\EnumInterpreter.cs" />
-    <Compile Include="Enums\InfoEnums.cs" />
+    <Compile Include="Enums\LogEntry.cs" />
+    <Compile Include="Enums\MessageTypeEnum.cs" />
     <Compile Include="Event\CommandRecievedEventArgs.cs" />
     <Compile Include="Event\InfoEventArgs.cs" />
     <Compile Include="LogWin.xaml.cs">
       <DependentUpon>LogWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\ILogModel.cs" />
+    <Compile Include="Model\IMainWinModel.cs" />
     <Compile Include="Model\ISettingsModel.cs" />
-    <Compile Include="Model\LogMessage.cs" />
     <Compile Include="Model\LogModel.cs" />
-    <Compile Include="Model\MessageRecievedEventArgs.cs" />
-    <Compile Include="Model\MessageTypeEnum.cs" />
+    <Compile Include="Model\MainWinModel.cs" />
     <Compile Include="Model\SettingsModel.cs" />
     <Compile Include="SettingsWin.xaml.cs">
       <DependentUpon>SettingsWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Converter.cs" />
     <Compile Include="ViewModel\ILogViewModel.cs" />
+    <Compile Include="ViewModel\IMainWinViewModel.cs" />
     <Compile Include="ViewModel\ISettingsViewModel.cs" />
     <Compile Include="ViewModel\LogViewModel.cs" />
+    <Compile Include="ViewModel\MainWinViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Page Include="LogWin.xaml">
       <SubType>Designer</SubType>

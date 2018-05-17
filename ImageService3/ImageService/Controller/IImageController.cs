@@ -1,5 +1,7 @@
 ﻿
 
+using ImageService.Server;
+
 namespace ImageService.Controller
 {
     /// <summary>
@@ -15,5 +17,6 @@ namespace ImageService.Controller
         /// <param name="result">the result is true if the command succeeded.</param>
         /// <returns></returns>
         string ExecuteCommand(int commandID, string[] args, out bool result);
+        ImageServer ImageServer { get; set; }
     }
 }

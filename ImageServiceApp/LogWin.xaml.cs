@@ -10,13 +10,12 @@ namespace ImageServiceApp
     /// </summary>
     public partial class LogWin : UserControl
     {
-        private LogViewModel LogsViewModel;
+     
 
         public LogWin()
         {
             InitializeComponent();
-            LogsViewModel = new LogViewModel();
-            this.DataContext = LogsViewModel;
+            this.DataContext = new LogViewModel();
         }
     }
 }

@@ -8,6 +8,7 @@ using ImageService.Server;
 using ImageService.Controller;
 using ImageService.Modal;
 using System.Configuration;
+using System.Collections.Generic;
 
 namespace ImageService3
 {
@@ -23,6 +24,9 @@ namespace ImageService3
         private IImageServiceModal modal;
         private IImageController controller;
         private ILoggingService logging;
+        private TcpServer imageServiceSrv;
+        private List<Tuple<string, bool>> loggsMessages;
+
         public enum ServiceState
         {
             SERVICE_STOPPED = 0x00000001,
@@ -48,37 +52,43 @@ namespace ImageService3
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
         #endregion
-
-
         /// <summary>
-        /// Constructor of ImageService
+        /// ImageService function.
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">command line args</param>
         public ImageService3(string[] args)
         {
             try
             {
                 InitializeComponent();
-                //read from app config
-                string eventSourceName = ConfigurationManager.AppSettings.Get("SourceName"); 
+                //read params from app config
+                string eventSourceName = ConfigurationManager.AppSettings.Get("SourceName");
                 string logName = ConfigurationManager.AppSettings.Get("LogName");
-
-                eventLog1 = new EventLog();
-                if (!EventLog.SourceExists(eventSourceName))
+                eventLog1 = new System.Diagnostics.EventLog();
+                if (!System.Diagnostics.EventLog.SourceExists(eventSourceName))
                 {
-                    EventLog.CreateEventSource(eventSourceName, logName);
+                    System.Diagnostics.EventLog.CreateEventSource(eventSourceName, logName);
                 }
                 eventLog1.Source = eventSourceName;
                 eventLog1.Log = logName;
-                this.logging = new LoggingService();
+                //initialize members
+                this.logging = new LoggingService(this.eventLog1);
                 this.logging.MessageRecieved += WriteMessage;
                 this.modal = new ImageServiceModal()
                 {
                     OutputFolder = ConfigurationManager.AppSettings.Get("OutputDir"),
-                    ThumbnailSize = int.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"))
+                    ThumbnailSize = Int32.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"))
+
                 };
-                this.controller = new ImageController(this.modal);
-                this.m_imageServer = new ImageServer(this.controller, this.logging);
+                this.controller = new ImageController(this.modal, this.logging);
+                this.m_imageServer = new ImageServer(controller, logging);
+                this.controller.ImageServer = m_imageServer;
+                IClientHandler ch = new ClientHandler(controller, logging);
+                imageServiceSrv = new TcpServer(8000, logging, ch);
+                ImageServer.NotifyAllHandlerRemoved += imageServiceSrv.NotifyAllClientsAboutUpdate;
+                this.logging.UpdateLogEntries += imageServiceSrv.NotifyAllClientsAboutUpdate;
+                imageServiceSrv.Start();
+
             }
             catch (Exception e)
             {
@@ -86,49 +96,97 @@ namespace ImageService3
             }
         }
 
-      
+
         /// <summary>
-        /// The function manager when the service start.
+        /// OnStart function.
+        /// manages what happens when the service is started
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">command line args</param>
         protected override void OnStart(string[] args)
         {
             eventLog1.WriteEntry("In OnStart");
+            if (this.logging != null)
+            {
+                this.logging.InvokeUpdateEvent("In OnStart", MessageTypeEnum.INFO);
+            }
             // Update the service state to Start Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+            // Set up a timer to trigger every minute.  
+            System.Timers.Timer timer = new System.Timers.Timer();
+            timer.Interval = 60000; // 60 seconds  
+            timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
+            timer.Start();
             // Update the service state to Running.  
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
             eventLog1.WriteEntry("Leave OnStart");
+            if (this.logging != null)
+            {
+                this.logging.InvokeUpdateEvent("Leave OnStart", MessageTypeEnum.INFO);
+            }
 
         }
-
         /// <summary>
-        /// The function manager when the service stop.
+        /// OnStop function.
+        /// manages what happens when the service is sttopped
         /// </summary>
         protected override void OnStop()
         {
-            eventLog1.WriteEntry("In OnStop.");
+            eventLog1.WriteEntry("In onStop.");
+            if (this.logging != null)
+            {
+                this.logging.InvokeUpdateEvent("In onStop", MessageTypeEnum.INFO);
+            }
             this.m_imageServer.StopServer();
-          
+            eventLog1.WriteEntry("Leave onStop.");
+            if (this.logging != null)
+            {
+                this.logging.InvokeUpdateEvent("Leave onStop", MessageTypeEnum.INFO);
+            }
+            this.imageServiceSrv.Stop();
         }
-
         /// <summary>
-        ///  The function manager when the service continue.
+        /// OnContinue function.
+        /// manages what happens when the service is continue
         /// </summary>
         protected override void OnContinue()
         {
             eventLog1.WriteEntry("In OnContinue.");
+            if (this.logging != null)
+            {
+                this.logging.InvokeUpdateEvent("In OnContinue.", MessageTypeEnum.INFO);
+            }
+
         }
-        
-       
         /// <summary>
-        /// For each MessageTypeEnum match EventLogEntryType
+        /// OnTimer function.
         /// </summary>
-        /// <param name="status"></param>
+        /// <param name="sender">sender obj</param>
+        /// <param name="args">arguments</param>
+        public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
+        {
+            // TODO: Insert monitoring activities here.  
+            //eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
+        }
+        /// <summary>
+        /// WriteMessage function.
+        /// wrrites to log.
+        /// </summary>
+        /// <param name="sender"> sender obj</param>
+        /// <param name="e" >MessageRecievedEventArgs obj</param>
+        public void WriteMessage(Object sender, MessageRecievedEventArgs e)
+        {
+            eventLog1.WriteEntry(e.Message, GetType(e.Status));
+        }
+
+        /// <summary>
+        /// GetType function.
+        /// converts from MessageTypeEnum to EventLogEntryType.
+        /// </summary>
+        /// <param name="status">log type</param>
         /// <returns></returns>
         private EventLogEntryType GetType(MessageTypeEnum status)
         {
@@ -142,16 +200,6 @@ namespace ImageService3
                 default:
                     return EventLogEntryType.Information;
             }
-        }
-
-        /// <summary>
-        /// The function write the log.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void WriteMessage(Object sender, MessageRecievedEventArgs e)
-        {
-            eventLog1.WriteEntry(e.Message, GetType(e.Status));
         }
     }
 }

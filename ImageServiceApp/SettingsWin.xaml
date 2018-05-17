@@ -31,9 +31,9 @@
             <TextBlock Grid.Row="2" Padding="3" Grid.Column="2" Text="{Binding LogName}" Margin="3"></TextBlock>
 
             <TextBlock Grid.Row="4" Padding="3" FontWeight="Bold" Margin="3">Thumbnail Size:</TextBlock>
-            <TextBlock Grid.Row="3" Padding="3" Grid.Column="2" Text="{Binding TumbnailSize}" Margin="3"></TextBlock>
+            <TextBlock Grid.Row="3" Padding="3" Grid.Column="2" Text="{Binding TumbSize}" Margin="3"></TextBlock>
             <Button x:Name="btnRemove" Grid.Row="4"  HorizontalContentAlignment="Center"   Command="{Binding RemoveCommand}" AutomationProperties.AutomationId="btnRemove" Grid.ColumnSpan="2">Remove</Button>
-            <ListBox x:Name="lsbHandlers" Grid.Row="5" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch"   SelectedItem="{Binding ChosenHandler}" ItemsSource="{Binding Directories}"
+            <ListBox x:Name="lsbHandlers" Grid.Row="5" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch"   SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding VM_Handlers}"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
             </ListBox>
         </Grid>

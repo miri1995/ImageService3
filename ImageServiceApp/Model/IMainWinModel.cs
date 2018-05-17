@@ -1,19 +1,16 @@
-﻿using ImageServiceApp.Enums;
+﻿using ImageServiceApp.Communication;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-
-
 namespace ImageServiceApp.Model
 {
-    interface ILogModel: INotifyPropertyChanged
+    interface IMainWinModel: INotifyPropertyChanged
     {
-        ObservableCollection<LogEntry> LogEntries { get; set; }
+        bool IsConnected { get; set; }
+        IClient GuiClient { get; set; }
     }
 }

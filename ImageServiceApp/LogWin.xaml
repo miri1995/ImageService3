@@ -3,36 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ImageServiceApp.ViewModel"
+             xmlns:local="clr-namespace:ImageServiceApp"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-        <local:Converter x:Key="Converter"/>
-    </UserControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="463*"/>
-            <ColumnDefinition Width="537*"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.ColumnSpan="2">
-            <Label Content="Logs" FontSize="72" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Salmon" RenderTransformOrigin="2.634,0.921" FontStyle="Italic"/>
-            <DataGrid ItemsSource="{Binding LogsMessageList}" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False"
-                          CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False"
-                          AutoGenerateColumns="False" IsHitTestVisible="False" Focusable="False" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible"
-                          RowHeight="50" ColumnWidth="100">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Type" Width="Auto" IsReadOnly="True" Binding="{Binding Status}" >
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Background" Value="{Binding Path=Status, Converter={StaticResource ColorConverter}}" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Message" Binding="{Binding Message}" Width="*" IsReadOnly="True"/>
-                </DataGrid.Columns>
+    
+    <DockPanel ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="-1,0,0,10">
+        <Label Content="Logs" FontSize="25" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Blue" RenderTransformOrigin="2.634,0.921" DockPanel.Dock="Top"/>
+        <DataGrid ItemsSource="{Binding LogEntries}" AutoGenerateColumns="False" CanUserAddRows="False"  VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" Width="Auto" Height="Auto" Margin="0,0,0,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Type" Width="Auto" IsReadOnly="True" Binding="{Binding Path=Type}" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Message" Width="*" IsReadOnly="True" Binding="{Binding Message}" />
+            </DataGrid.Columns>
 
-            </DataGrid>
-            
-        </StackPanel>
-    </Grid>
+        </DataGrid>
+    </DockPanel>
+
 </UserControl>

@@ -57,6 +57,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.IO.Log" />
     <Reference Include="System.Management" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.6.3.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -77,9 +78,12 @@
   <ItemGroup>
     <Compile Include="ImageService.Infrastructure\Enums\CommandEnum.cs" />
     <Compile Include="ImageService.Logging\ILoggingService.cs" />
+    <Compile Include="ImageService.Logging\LogEntry.cs" />
     <Compile Include="ImageService.Logging\LoggingService.cs" />
     <Compile Include="ImageService.Logging\Modal\MessageRecievedEventArgs.cs" />
     <Compile Include="ImageService.Logging\Modal\MessageTypeEnum.cs" />
+    <Compile Include="ImageService\Commands\CloseCommand.cs" />
+    <Compile Include="ImageService\Commands\GetConfigCommand.cs" />
     <Compile Include="ImageService\Commands\LogCommand.cs" />
     <Compile Include="ImageService\ImageService3.cs">
       <SubType>Component</SubType>
@@ -97,7 +101,11 @@
     <Compile Include="ImageService\Modal\Event\DirectoryCloseEventArgs.cs" />
     <Compile Include="ImageService\Modal\IImageServiceModal.cs" />
     <Compile Include="ImageService\Modal\ImageServiceModal.cs" />
+    <Compile Include="ImageService\Server\ClientHandler.cs" />
+    <Compile Include="ImageService\Server\IClientHandler.cs" />
     <Compile Include="ImageService\Server\ImageServer.cs" />
+    <Compile Include="ImageService\Server\ITcpServer.cs" />
+    <Compile Include="ImageService\Server\TcpServer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>

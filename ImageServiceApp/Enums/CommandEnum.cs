@@ -8,10 +8,12 @@ namespace ImageServiceApp.Enums
 {
     public enum CommandEnum : int
     {
-        NotCommand = 0,
         NewFileCommand = 1,
-        GetConfigCommand = 2,
-        LogCommand = 3,
-        CloseCommand = 4
+        CloseCommand=2,
+        GetConfigCommand=3,
+        LogCommand=4,
+        CloseHandler=5,
+        AddLogEntry=6,
+        Disconnected=7
     }
 }

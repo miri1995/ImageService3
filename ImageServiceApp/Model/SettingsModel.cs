@@ -10,116 +10,174 @@ using ImageServiceApp.Enums;
 using ImageServiceApp.Model;
 using ImageServiceApp.Communication;
 using ImageServiceApp.Models;
+using System.Windows.Data;
 
 namespace ImageServiceApp.Model
 {
-    class SettingsModel : INotifyPropertyChanged,ISettingsModel
+    class SettingsModel : ISettingsModel
     {
-        // an event that raises when a property is being changed
-        public event PropertyChangedEventHandler PropertyChanged;
-        private ObservableCollection<string> m_Directories;
-        private string m_OutputDirectory;
-        private string m_SourceName;
-        private string m_LogName;
-        private string m_ThumbSize;
-        private string m_ChosenHandler;
-        private Client m_ConnectionModel;
+        public IClient GuiClient { get; set; }
+        private string m_tumbnailSize;
+        private string m_logName;
+        private string m_outputDirectory;
+        private string m_sourceName;
 
-
+        /// <summary>
+        /// SettingModel constructor.
+        /// </summary>
         public SettingsModel()
         {
-            m_OutputDirectory = "Output Directory:";
-            m_SourceName = "Source Name:";
-            m_LogName = "Log Name:";
-            m_ThumbSize = "Thumbnail Size:";
-            m_Directories = new ObservableCollection<string>();
-            m_ConnectionModel = Client.Connection();
-            m_ConnectionModel.start();
-           
+            this.GuiClient = Client.Instance;
+            this.GuiClient.RecieveCommand();
+            this.GuiClient.UpdateResponse += UpdateResponse;
+            this.InitializeSettingsParams();
         }
 
-        protected void OnPropertyChanged(string name)
+        /// <summary>
+        /// UpdateResponse function.
+        /// updates the model when message recieved from srv.
+        /// </summary>
+        /// <param name="responseObj">the info came from srv</param>
+        private void UpdateResponse(CommandRecievedEventArgs responseObj)
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            try
+            {
+                if (responseObj != null)
+                {
+                    switch (responseObj.CommandID)
+                    {
+                        case (int)CommandEnum.GetConfigCommand:
+                            UpdateConfigurations(responseObj);
+                            break;
+                        case (int)CommandEnum.CloseHandler:
+                            CloseHandler(responseObj);
+                            break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        /// <summary>
+        /// UpdateConfigurations function.
+        /// updates app config params.
+        /// </summary>
+        /// <param name="responseObj">the info came from srv</param>
+        private void UpdateConfigurations(CommandRecievedEventArgs responseObj)
+        {
+            try
+            {
+                this.OutputDirectory = responseObj.Args[0];
+                this.SourceName = responseObj.Args[1];
+                this.LogName = responseObj.Args[2];
+                this.TumbSize = responseObj.Args[3];
+                string[] handlers = responseObj.Args[4].Split(';');
+                foreach (string handler in handlers)
+                {
+                    this.Handlers.Add(handler);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        /// <summary>
+        /// CloseHandler function.
+        /// </summary>
+        /// <param name="responseObj">the info came from srv</param>
+        private void CloseHandler(CommandRecievedEventArgs responseObj)
+        {
+            if (Handlers != null && Handlers.Count > 0 && responseObj != null && responseObj.Args != null
+                                 && Handlers.Contains(responseObj.Args[0]))
+            {
+                this.Handlers.Remove(responseObj.Args[0]);
+            }
+        }
+        /// <summary>
+        /// InitializeSettingsParams function.
+        /// initializes settings params.
+        /// </summary>
+        private void InitializeSettingsParams()
+        {
+            try
+            {
+                this.OutputDirectory = string.Empty;
+                this.SourceName = string.Empty;
+                this.LogName = string.Empty;
+                this.TumbSize = string.Empty;
+                Handlers = new ObservableCollection<string>();
+                Object thisLock = new Object();
+                BindingOperations.EnableCollectionSynchronization(Handlers, thisLock);
+                string[] arr = new string[5];
+                CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, arr, "");
+                this.GuiClient.SendCommand(request);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
-       
+
+
         public string OutputDirectory
         {
-            get { return m_OutputDirectory; }
+            get { return m_outputDirectory; }
             set
             {
-                m_OutputDirectory = "Output Directory:" + value;
+                m_outputDirectory = value;
                 OnPropertyChanged("OutputDirectory");
             }
         }
 
-        
+
         public string SourceName
         {
-            get { return m_SourceName; }
+            get { return m_sourceName; }
             set
             {
-                m_OutputDirectory = "Source Name:" + value;
+                m_sourceName = value;
                 OnPropertyChanged("SourceName");
             }
         }
 
-       
         public string LogName
         {
-            get { return m_LogName; }
+            get { return m_logName; }
             set
             {
-                m_LogName = "Log Name:" + value;
+                m_logName = value;
                 OnPropertyChanged("LogName");
             }
         }
 
-       
-       
-        public string ThumbSize
+        public string TumbSize
         {
-            get { return m_ThumbSize; }
+            get { return m_tumbnailSize; }
             set
             {
-                m_OutputDirectory = "Thumbnail Size:" + value;
-                OnPropertyChanged("ThumbSize");
+                m_tumbnailSize = value;
+                OnPropertyChanged("TumbnailSize");
             }
         }
-
-       
-       
-        public string ChosenHandler
+        public ObservableCollection<string> Handlers { get; set; }
+        #region Notify Changed
+        public event PropertyChangedEventHandler PropertyChanged;
+        /// <summary>
+        /// OnPropertyChanged function.
+        /// defines what happens when property changed.
+        /// </summary>
+        /// <param name="name">prop name</param>
+        protected void OnPropertyChanged(string name)
         {
-            get { return m_ChosenHandler; }
-            set
-            {
-                m_ChosenHandler = value;
-                OnPropertyChanged("ChosenHandler");
-            }
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
 
-       
-        public ObservableCollection<string> Directories
-        {
-            get { return m_Directories; }
-            set
-            {
-                m_Directories = value;
-                OnPropertyChanged("Directories");
-            }
-        }
-
-       
-       
-
-        public void sendToServer()
-        {
-            string[] args = { };
-            CommandRecievedEventArgs command = new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, args, "Empty");
-            m_ConnectionModel.Sender(this, command);
-        }
+        #endregion
     }
-}
 
+}

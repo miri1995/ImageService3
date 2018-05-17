@@ -7,47 +7,114 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using ImageServiceApp;
 using ImageServiceApp.Model;
+using System.Windows.Data;
+using ImageServiceApp.Event;
+using ImageServiceApp.Enums;
+using System.Windows;
+using Newtonsoft.Json;
+using ImageServiceApp.Communication;
+using ImageServiceApp.Models;
+
 
 namespace ImageServiceApp.Model
 {
-    class LogModel : INotifyPropertyChanged, ILogModel
+    class LogModel :  ILogModel
     {
-        // an event that raises when a property is being changed
+        private ObservableCollection<LogEntry> logEntries;
+        public IClient GuiClient { get; set; }
+        // Property - List of all the event log entries. 
+        public ObservableCollection<LogEntry> LogEntries
+        {
+            get
+            {
+                return this.logEntries;
+            }
+            set { throw new NotImplementedException(); }
+        }
+            
+
+        // boolean property, represents if the model is connected to the image service.
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Log model constructor.
+        /// </summary>
         public LogModel()
         {
-            this.m_LogMessageList = new ObservableCollection<MessageRecievedEventArgs>();
-
-            this.m_LogMessageList.Add(new MessageRecievedEventArgs() { Status = MessageTypeEnum.INFO, Message = "Test Message" });
-            this.m_LogMessageList.Add(new MessageRecievedEventArgs() { Status = MessageTypeEnum.WARNING, Message = "Test Message2" });
-            this.m_LogMessageList.Add(new MessageRecievedEventArgs() { Status = MessageTypeEnum.FAIL, Message = "Test Message3" });
+            this.GuiClient = Client.Instance;
+            this.GuiClient.UpdateResponse += UpdateResponse;
+            this.InitializeLogsParams();
         }
 
-
-
-        protected void OnPropertyChanged(string name)
+        /// <summary>
+        /// retreive event log entries list from the image service.
+        /// </summary>
+        private void InitializeLogsParams()
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            this.logEntries = new ObservableCollection<LogEntry>();
+            Object thisLock = new Object();
+            BindingOperations.EnableCollectionSynchronization(LogEntries, thisLock);
+            CommandRecievedEventArgs commandRecievedEventArgs = new CommandRecievedEventArgs((int)CommandEnum.LogCommand, null, "");
+            this.GuiClient.SendCommand(commandRecievedEventArgs);
         }
 
-        private ObservableCollection<MessageRecievedEventArgs> m_LogMessageList;
-        public ObservableCollection<MessageRecievedEventArgs> LogMessageList
-        { //get; set;
-            get { return this.m_LogMessageList; }
-            set
+        /// <summary>
+        /// get CommandRecievedEventArgs object which was sent from the image service.
+        /// reacts only if the commandID is relevant to the log model.
+        /// </summary>
+        /// <param name="responseObj"></param>
+        private void UpdateResponse(CommandRecievedEventArgs responseObj)
+        {
+            if (responseObj != null)
             {
-                this.m_LogMessageList = value;
-                OnPropertyChanged("LogMessageList");
+                switch (responseObj.CommandID)
+                {
+                    case (int)CommandEnum.LogCommand:
+                        IntializeLogEntriesList(responseObj);
+                        break;
+                    case (int)CommandEnum.AddLogEntry:
+                        AddLogEntry(responseObj);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
-        public void AddToList(MessageRecievedEventArgs e)
+        /// <summary>
+        /// Initialize log event entries list.
+        /// </summary>
+        /// <param name="responseObj">expected json string of ObservableCollection<LogEntry> in responseObj.Args[0]</param>
+        private void IntializeLogEntriesList(CommandRecievedEventArgs responseObj)
         {
-            this.m_LogMessageList.Add(e);
-            OnPropertyChanged("AddToList");
+            try
+            {
+                foreach (LogEntry log in JsonConvert.DeserializeObject<ObservableCollection<LogEntry>>(responseObj.Args[0]))
+                {
+                    this.LogEntries.Add(log);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
-       
+        /// <summary>
+        /// adds new log entry to the event log entries list
+        /// </summary>
+        /// <param name="responseObj">expected responseObj.Args[0] = EntryType,  responseObj.Args[1] = Message </param>
+        private void AddLogEntry(CommandRecievedEventArgs responseObj)
+        {
+            try
+            {
+                LogEntry newLogEntry = new LogEntry { Type = responseObj.Args[0], Message = responseObj.Args[1] };
+                this.LogEntries.Insert(0, newLogEntry);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
     }
 }

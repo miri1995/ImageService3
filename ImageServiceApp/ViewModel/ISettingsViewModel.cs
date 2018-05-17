@@ -9,12 +9,11 @@ namespace ImageServiceApp.ViewModel
 {
     interface ISettingsViewModel
     {
-        string OutputDirectory { get; set; }
-        string SourceName { get; set; }
-        string LogName { get; set; }
-        string ThumbSize { get; set; }
-        string ChosenHandler { get; set; }
-        ObservableCollection<string> Directories { get; set; }
-       
+        string OutputDirectory { get; }
+        string SourceName { get; }
+        string LogName { get; }
+        string TumbSize { get; }
+        ObservableCollection<string> VM_Handlers { get; }
+
     }
 }

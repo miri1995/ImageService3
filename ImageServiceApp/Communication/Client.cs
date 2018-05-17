@@ -6,89 +6,129 @@ using System.IO;
 using Newtonsoft.Json;
 using ImageServiceApp.Event;
 using ImageServiceApp.Communication;
+using System.Threading;
+using ImageServiceApp.Enums;
 
 namespace ImageServiceApp.Models
 {
     public class Client: IClient
     {
-        private static Client model;
-        private string appConfig;
-        private string logs;
         private TcpClient client;
-        private NetworkStream stream;
-        private BinaryWriter writer;
-        private BinaryReader reader;
+        private bool m_isStopped;
+        public delegate void UpdateResponseArrived(CommandRecievedEventArgs responseObj);
+        public event Communication.UpdateResponseArrived UpdateResponse;
+        private static Client m_instance;
+        private static Mutex m_mutex = new Mutex();
+        public bool Connected { get; set; }
 
-        public event EventHandler<InfoEventArgs> InfoRecieved;
-
-        public string AppConfig
+        /// <summary>
+        /// ImageServiceClient private constructor.
+        /// </summary>
+        private Client()
         {
-            get { return appConfig; }
-            set { }
+            this.Connected = this.Start();
         }
 
-        public string Logs
+        /// <summary>
+        /// Instance - returns instance of the singleton class.
+        /// </summary>
+        public static Client Instance
         {
-            get { return logs; }
-            set { }
-        }
-
-        public static Client Connection()
-        {
-            // if not already created
-            if (model == null)
+            get
             {
-                model = new Client();
-            }
-            // otherwise create new instance
-            return model;
-        }
-
-        public void start()
-        {
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
-            client = new TcpClient();
-            client.Connect(ep);
-            Reciever();
-        }
-
-        public void Sender(object sender, CommandRecievedEventArgs e)
-        {
-            new Task(() =>
-            {
-                stream = client.GetStream();
-                writer = new BinaryWriter(stream);
-                string args = JsonConvert.SerializeObject(e);
-                writer.Write(args);
-            }).Start();
-        }
-
-        private void Reciever()
-        {
-            new Task(() =>
-            {
-                stream = client.GetStream();
-                reader = new BinaryReader(stream);
-                while (client.Connected)
+                if (m_instance == null)
                 {
-                    string args;
-                    try
-                    {
-                        args = reader.ReadString();
-                    }
-                    catch (Exception error)
-                    {
-                        return;
-                    }
-                    InfoEventArgs e = JsonConvert.DeserializeObject<InfoEventArgs>(args);
-                    InfoRecieved?.Invoke(this, e);
+                    m_instance = new Client();
+                }
+                return m_instance;
+            }
+        }
+
+        /// <summary>
+        /// Start function.
+        /// starts the tcp connection.
+        /// </summary>
+        /// <returns></returns>
+        private bool Start()
+        {
+            try
+            {
+                bool result = true;
+                IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
+                client = new TcpClient();
+                client.Connect(ep);
+                Console.WriteLine("You are connected");
+                m_isStopped = false;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// SendCommand function.
+        /// sends command to srv.
+        /// </summary>
+        /// <param name="commandRecievedEventArgs">info to be sented to server</param>
+        public void SendCommand(CommandRecievedEventArgs commandRecievedEventArgs)
+        {
+            new Task(() =>
+            {
+                try
+                {
+                    string jsonCommand = JsonConvert.SerializeObject(commandRecievedEventArgs);
+                    NetworkStream stream = client.GetStream();
+                    BinaryWriter writer = new BinaryWriter(stream);
+                    // Send data to server
+                    Console.WriteLine($"Send {jsonCommand} to Server");
+                    m_mutex.WaitOne();
+                    writer.Write(jsonCommand);
+                    m_mutex.ReleaseMutex();
+                }
+                catch (Exception ex)
+                {
+
                 }
             }).Start();
         }
 
-        public void Disconnect()
+        /// <summary>
+        /// RecieveCommand function.
+        /// creates task and reads new messages.
+        /// </summary>
+        public void RecieveCommand()
         {
+            new Task(() =>
+            {
+                try
+                {
+                    while (!m_isStopped)
+                    {
+                        NetworkStream stream = client.GetStream();
+                        BinaryReader reader = new BinaryReader(stream);
+                        string response = reader.ReadString();
+                        Console.WriteLine($"Recieve {response} from Server");
+                        CommandRecievedEventArgs responseObj = JsonConvert.DeserializeObject<CommandRecievedEventArgs>(response);
+                        this.UpdateResponse?.Invoke(responseObj);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }).Start();
+        }
+
+       
+        public void Disconnected()
+        {
+            CommandRecievedEventArgs commandRecievedEventArgs = new CommandRecievedEventArgs((int)CommandEnum.Disconnected, null, "");
+            this.SendCommand(commandRecievedEventArgs);
             client.Close();
+            this.m_isStopped = true;
         }
     }
 }
