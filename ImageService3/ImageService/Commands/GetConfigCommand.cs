@@ -11,7 +11,7 @@ using ImageService.Modal;
 
 namespace ImageService.Commands
 {
-    class GetConfigCommand:ICommand
+    public class GetConfigCommand:ICommand
     {
         /// <summary>
 		/// That function will execute the task of the command.

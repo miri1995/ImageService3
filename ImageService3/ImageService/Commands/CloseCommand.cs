@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ImageService.Commands
 {
-    class CloseCommand:ICommand
+    public class CloseCommand:ICommand
     {
         private ImageServer m_imageServer;
 

@@ -9,7 +9,7 @@ using System;
 
 namespace ImageService.Commands
 {
-    class LogCommand:ICommand
+    public class LogCommand:ICommand
     {
         private ILoggingService loggingService;
 

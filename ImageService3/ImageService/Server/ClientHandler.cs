@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ImageService.Server
 {
-    class ClientHandler : IClientHandler
+   public class ClientHandler : IClientHandler
     {
         IImageController ImageController { get; set; }
         ILoggingService Logging { get; set; }

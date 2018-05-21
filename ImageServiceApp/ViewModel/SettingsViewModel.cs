@@ -9,7 +9,7 @@ using ImageServiceApp.Enums;
 
 namespace ImageServiceApp.ViewModel
 {
-   public class SettingsViewModel:ISettingsViewModel
+    class SettingsViewModel:ISettingsViewModel
     {
         private string selectedItem;
 

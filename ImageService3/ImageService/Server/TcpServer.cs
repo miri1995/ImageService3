@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace ImageService.Server
 {
-    class TcpServer : ITcpServer
+    public class TcpServer : ITcpServer
     {
         ILoggingService Logging { get; set; }
         int Port { get; set; }
