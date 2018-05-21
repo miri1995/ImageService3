@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ImageService.Logging.Modal;
+using System;
 
-namespace ImageServiceApp.Enums
+
+namespace ImageService.Logging
 {
-    public class LogEntry
+    public class LogMessage
     {
         private MessageTypeEnum type;
         public string Type

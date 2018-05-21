@@ -5,9 +5,9 @@ using System.Net.Sockets;
 using System.IO;
 using Newtonsoft.Json;
 using ImageServiceApp.Event;
-using ImageServiceApp.Communication;
 using System.Threading;
 using ImageServiceApp.Enums;
+using System.Windows;
 
 namespace ImageServiceApp.Communication
 {
@@ -54,10 +54,11 @@ namespace ImageServiceApp.Communication
             try
             {
                 bool result = true;
-                IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
+                string ip = "127.0.0.1";
+                IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ip), 8000);
                 client = new TcpClient();
                 client.Connect(ep);
-                Console.WriteLine("You are connected");
+                Console.WriteLine("Succeed connected");
                 m_isStopped = false;
                 return result;
             }
@@ -90,7 +91,7 @@ namespace ImageServiceApp.Communication
                 }
                 catch (Exception ex)
                 {
-
+                    MessageBox.Show(ex.ToString());
                 }
             }).Start();
         }
@@ -117,7 +118,7 @@ namespace ImageServiceApp.Communication
                 }
                 catch (Exception ex)
                 {
-
+                    MessageBox.Show(ex.ToString());
                 }
             }).Start();
         }

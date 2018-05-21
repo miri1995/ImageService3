@@ -6,6 +6,7 @@ using ImageService.Infrastructure.Enums;
 using System.Collections.ObjectModel;
 using ImageService.Modal;
 using System;
+using System.Windows;
 
 namespace ImageService.Commands
 {
@@ -25,7 +26,7 @@ namespace ImageService.Commands
         {
             try
             {
-                ObservableCollection<LogEntry> logMessages = this.loggingService.LogMessages;
+                ObservableCollection<LogMessage> logMessages = this.loggingService.LogMessages;
                 // serialize the log entries list to json string.
                 string jsonLogMessages = JsonConvert.SerializeObject(logMessages);
                 string[] arr = new string[1];
@@ -37,7 +38,9 @@ namespace ImageService.Commands
             }
             catch (Exception e)
             {
+
                 result = false;
+                MessageBox.Show(e.ToString());
                 return "LogCommand.Execute: Failed execute log command";
             }
         }

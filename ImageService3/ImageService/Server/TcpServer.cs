@@ -13,6 +13,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ImageService.Server
 {
@@ -66,6 +67,7 @@ namespace ImageService.Server
                         }
                         catch (Exception ex)
                         {
+                            MessageBox.Show(ex.ToString());
                             break;
                         }
                     }

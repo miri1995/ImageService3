@@ -12,6 +12,6 @@ namespace ImageServiceApp.ViewModel
 {
     interface ILogViewModel : INotifyPropertyChanged
     {
-        ObservableCollection<LogEntry> LogEntries { get; set; }
+        ObservableCollection<LogMessage> LogEntries { get; set; }
     }
 }

@@ -75,11 +75,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Co.cs" />
     <Compile Include="Communication\Client.cs" />
     <Compile Include="Communication\IClient.cs" />
     <Compile Include="Enums\CommandEnum.cs" />
-    <Compile Include="Enums\LogEntry.cs" />
+    <Compile Include="Enums\LogMessage.cs" />
     <Compile Include="Enums\MessageTypeEnum.cs" />
     <Compile Include="Event\CommandRecievedEventArgs.cs" />
     <Compile Include="Event\InfoEventArgs.cs" />

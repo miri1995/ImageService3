@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
-using ImageServiceApp;
-using ImageServiceApp.Model;
 using System.Windows.Data;
 using ImageServiceApp.Event;
 using ImageServiceApp.Enums;
@@ -24,10 +18,10 @@ namespace ImageServiceApp.Model
     class LogModel : ILogModel
     {
         // List of all the event log entries.
-        private ObservableCollection<LogEntry> logEntries;
+        private ObservableCollection<LogMessage> logEntries;
         public IClient GuiClient { get; set; }
         // Property - List of all the event log entries. 
-        public ObservableCollection<LogEntry> LogEntries
+        public ObservableCollection<LogMessage> LogEntries
         {
             get
             {
@@ -54,7 +48,7 @@ namespace ImageServiceApp.Model
         /// </summary>
         private void InitializeLogsParams()
         {
-            this.logEntries = new ObservableCollection<LogEntry>();
+            this.logEntries = new ObservableCollection<LogMessage>();
             Object thisLock = new Object();
             BindingOperations.EnableCollectionSynchronization(LogEntries, thisLock);
             CommandRecievedEventArgs commandRecievedEventArgs = new CommandRecievedEventArgs((int)CommandEnum.LogCommand, null, "");
@@ -92,7 +86,7 @@ namespace ImageServiceApp.Model
         {
             try
             {
-                foreach (LogEntry log in JsonConvert.DeserializeObject<ObservableCollection<LogEntry>>(responseObj.Args[0]))
+                foreach (LogMessage log in JsonConvert.DeserializeObject<ObservableCollection<LogMessage>>(responseObj.Args[0]))
                 {
                     this.LogEntries.Add(log);
                 }
@@ -111,7 +105,7 @@ namespace ImageServiceApp.Model
         {
             try
             {
-                LogEntry newLogEntry = new LogEntry { Type = responseObj.Args[0], Message = responseObj.Args[1] };
+                LogMessage newLogEntry = new LogMessage { Type = responseObj.Args[0], Message = responseObj.Args[1] };
                 this.LogEntries.Insert(0, newLogEntry);
             }
             catch (Exception ex)

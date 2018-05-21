@@ -22,7 +22,7 @@ namespace ImageServiceApp.ViewModel
        
 
         // List of all the event log entries.
-        public ObservableCollection<LogEntry> LogEntries
+        public ObservableCollection<LogMessage> LogEntries
         {
             get { return this.logModel.LogEntries; }
             set { throw new NotImplementedException(); }

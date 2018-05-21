@@ -5,6 +5,7 @@ using ImageServiceApp.Event;
 using ImageServiceApp.Enums;
 using ImageServiceApp.Communication;
 using System.Windows.Data;
+using System.Windows;
 
 namespace ImageServiceApp.Model
 {
@@ -51,7 +52,7 @@ namespace ImageServiceApp.Model
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex.ToString());
             }
         }
         /// <summary>
@@ -75,7 +76,7 @@ namespace ImageServiceApp.Model
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex.ToString());
             }
         }
         /// <summary>
@@ -111,7 +112,7 @@ namespace ImageServiceApp.Model
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex.ToString());
             }
         }
 

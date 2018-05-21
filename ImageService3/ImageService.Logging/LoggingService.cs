@@ -24,10 +24,10 @@ namespace ImageService.Logging
         public event UpdateLogEntry UpdateLogEntries;
 
         // list of all the event log entries.
-        private ObservableCollection<LogEntry> logMessages;
+        private ObservableCollection<LogMessage> logMessages;
 
         // property that wrapps logMessages.
-        public ObservableCollection<LogEntry> LogMessages 
+        public ObservableCollection<LogMessage> LogMessages 
         {
             get { return this.logMessages; }
             set { throw new NotImplementedException(); }
@@ -39,7 +39,7 @@ namespace ImageService.Logging
         /// <param name="eventLog">EventLog of the ImageService</param>
         public LoggingService(EventLog eventLog)
         {
-            this.logMessages = new ObservableCollection<LogEntry>();
+            this.logMessages = new ObservableCollection<LogMessage>();
             // retrieve all the eventLog entries and save them in this.logMessages.
             GetAllLogEventMessages(eventLog);
         }
@@ -56,7 +56,7 @@ namespace ImageService.Logging
             MessageRecieved?.Invoke(this, new MessageRecievedEventArgs(type, message));
 
             // adds the new event log entry to logMessages.
-            LogEntry newLogEnrty = new LogEntry { Type = Enum.GetName(typeof(MessageTypeEnum), type), Message = message };
+            LogMessage newLogEnrty = new LogMessage { Type = Enum.GetName(typeof(MessageTypeEnum), type), Message = message };
             this.LogMessages.Insert(0, newLogEnrty);
 
             InvokeUpdateEvent(message, type);
@@ -69,7 +69,7 @@ namespace ImageService.Logging
         /// <param name="type">entry type</param>
         public void InvokeUpdateEvent(string message, MessageTypeEnum type)
         {
-            LogEntry newLogEnrty = new LogEntry { Type = Enum.GetName(typeof(MessageTypeEnum), type), Message = message };
+            LogMessage newLogEnrty = new LogMessage { Type = Enum.GetName(typeof(MessageTypeEnum), type), Message = message };
             string[] args = new string[2];
 
             // args[0] = EntryType, args[1] = Message
@@ -94,7 +94,7 @@ namespace ImageService.Logging
             eventLog.Entries.CopyTo(logs, 0);
             foreach (EventLogEntry entry in logs)
             {
-                this.LogMessages.Insert(0, new LogEntry
+                this.LogMessages.Insert(0, new LogMessage
                 {
                     Type = Enum.GetName(typeof(MessageTypeEnum), LoggingService.FromLogEventTypeToMessageTypeEnum(entry.EntryType)),
                     Message = entry.Message
