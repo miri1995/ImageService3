@@ -9,7 +9,7 @@ using ImageServiceApp.Communication;
 using System.Threading;
 using ImageServiceApp.Enums;
 
-namespace ImageServiceApp.Models
+namespace ImageServiceApp.Communication
 {
     public class Client: IClient
     {

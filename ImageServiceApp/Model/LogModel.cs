@@ -13,13 +13,17 @@ using ImageServiceApp.Enums;
 using System.Windows;
 using Newtonsoft.Json;
 using ImageServiceApp.Communication;
-using ImageServiceApp.Models;
+
 
 
 namespace ImageServiceApp.Model
 {
-    class LogModel :  ILogModel
+    /// <summary>
+    /// Implementation of ILogModel interface.
+    /// </summary>
+    class LogModel : ILogModel
     {
+        // List of all the event log entries.
         private ObservableCollection<LogEntry> logEntries;
         public IClient GuiClient { get; set; }
         // Property - List of all the event log entries. 
@@ -30,8 +34,7 @@ namespace ImageServiceApp.Model
                 return this.logEntries;
             }
             set { throw new NotImplementedException(); }
-        }
-            
+         }
 
         // boolean property, represents if the model is connected to the image service.
         public event PropertyChangedEventHandler PropertyChanged;

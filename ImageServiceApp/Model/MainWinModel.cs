@@ -1,5 +1,5 @@
 ﻿using ImageServiceApp.Communication;
-using ImageServiceApp.Models;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,14 +9,9 @@ using System.Threading.Tasks;
 
 namespace ImageServiceApp.Model
 {
-    class MainWinModel: IMainWinModel
+     class MainWinModel: IMainWinModel
     {
         private bool m_isConnected;
-
-        public IClient GuiClient { get; set; }
-
-    
-
         public bool IsConnected
         {
             get { return m_isConnected; }
@@ -27,7 +22,10 @@ namespace ImageServiceApp.Model
             }
         }
 
-        
+        public IClient GuiClient { get; set; }
+        /// <summary>
+        /// MainWindowModel constructor.
+        /// </summary>
         public MainWinModel()
         {
             GuiClient = Client.Instance;

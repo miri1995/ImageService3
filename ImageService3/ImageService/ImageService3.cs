@@ -197,6 +197,7 @@ namespace ImageService3
                 case MessageTypeEnum.WARNING:
                     return EventLogEntryType.Warning;
                 case MessageTypeEnum.INFO:
+
                 default:
                     return EventLogEntryType.Information;
             }

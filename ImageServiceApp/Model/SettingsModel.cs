@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using ImageServiceApp.Event;
 using ImageServiceApp.Enums;
-using ImageServiceApp.Model;
 using ImageServiceApp.Communication;
-using ImageServiceApp.Models;
 using System.Windows.Data;
 
 namespace ImageServiceApp.Model
