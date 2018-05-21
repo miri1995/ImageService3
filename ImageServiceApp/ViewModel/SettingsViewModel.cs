@@ -64,11 +64,7 @@ namespace ImageServiceApp.ViewModel
 
         #region CommandsLogic
         public ICommand RemoveCommand { get; set; }
-        /// <summary>
-        /// OnRemove function.
-        /// tells what will happen when we press Remove button.
-        /// </summary>
-        /// <param name="obj"></param>
+       
         private void OnRemove(object obj)
         {
          
