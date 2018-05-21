@@ -18,7 +18,7 @@ namespace ImageServiceApp.Model
         private string m_sourceName;
 
         /// <summary>
-        /// SettingModel constructor.
+        ///Constructor
         /// </summary>
         public SettingsModel()
         {
@@ -158,9 +158,11 @@ namespace ImageServiceApp.Model
                 OnPropertyChanged("TumbnailSize");
             }
         }
+
         public ObservableCollection<string> Handlers { get; set; }
         #region Notify Changed
         public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
         /// OnPropertyChanged function.
         /// defines what happens when property changed.
