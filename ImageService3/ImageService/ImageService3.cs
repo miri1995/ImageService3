@@ -20,7 +20,7 @@ namespace ImageService3
     {
         #region members
         private int eventId = 1;
-        private ImageServer m_imageServer;          // The Image Server
+        private ImageServer m_imageServer;          
         private IImageServiceModal modal;
         private IImageController controller;
         private ILoggingService logging;
@@ -84,7 +84,8 @@ namespace ImageService3
                 this.m_imageServer = new ImageServer(controller, logging);
                 this.controller.ImageServer = m_imageServer;
                 IClientHandler ch = new ClientHandler(controller, logging);
-                imageServiceSrv = new TcpServer(8000, logging, ch);
+                int port = 8000;
+                imageServiceSrv = new TcpServer(port, logging, ch);
                 ImageServer.NotifyAllHandlerRemoved += imageServiceSrv.NotifyAllClientsAboutUpdate;
                 this.logging.UpdateLogEntries += imageServiceSrv.NotifyAllClientsAboutUpdate;
                 imageServiceSrv.Start();
@@ -104,7 +105,7 @@ namespace ImageService3
         /// <param name="args">command line args</param>
         protected override void OnStart(string[] args)
         {
-            eventLog1.WriteEntry("In OnStart");
+           
             if (this.logging != null)
             {
                 this.logging.InvokeUpdateEvent("In OnStart", MessageTypeEnum.INFO);
@@ -122,7 +123,7 @@ namespace ImageService3
             // Update the service state to Running.  
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
-            eventLog1.WriteEntry("Leave OnStart");
+            eventLog1.WriteEntry("OnStart");
             if (this.logging != null)
             {
                 this.logging.InvokeUpdateEvent("Leave OnStart", MessageTypeEnum.INFO);
@@ -135,7 +136,7 @@ namespace ImageService3
         /// </summary>
         protected override void OnStop()
         {
-            eventLog1.WriteEntry("In onStop.");
+           
             if (this.logging != null)
             {
                 this.logging.InvokeUpdateEvent("In onStop", MessageTypeEnum.INFO);
@@ -144,7 +145,7 @@ namespace ImageService3
             eventLog1.WriteEntry("Leave onStop.");
             if (this.logging != null)
             {
-                this.logging.InvokeUpdateEvent("Leave onStop", MessageTypeEnum.INFO);
+                this.logging.InvokeUpdateEvent("onStop", MessageTypeEnum.INFO);
             }
             this.imageServiceSrv.Stop();
         }
