@@ -50,7 +50,9 @@ namespace ImageServiceApp.ViewModel
         }
         public string SourceName
         {
+            
             get { return model.SourceName; }
+            
         }
         public string LogName
         {
@@ -67,11 +69,9 @@ namespace ImageServiceApp.ViewModel
        
         private void OnRemove(object obj)
         {
-         
                 string[] arr = { this.selectedItem };
                 CommandRecievedEventArgs eventArgs = new CommandRecievedEventArgs((int)CommandEnum.CloseHandler, arr, "");
                 this.model.GuiClient.SendCommand(eventArgs);
-          
         }
         /// <summary>
         /// CanRemove function.
