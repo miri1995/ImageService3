@@ -20,7 +20,7 @@
 
                     <Setter Property="Background" Value="White" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Connected}"
+                        <DataTrigger Binding="{Binding VM_IsConnected}"
                              Value="False">
                             <Setter Property="Background" Value="Gray" />
                         </DataTrigger>

@@ -13,7 +13,7 @@ namespace ImageServiceApp.Communication
     {
         
         void SendCommand(CommandRecievedEventArgs commandRecievedEventArgs);
-        
+
         void RecieveCommand();
         event UpdateResponseArrived UpdateResponse;
         bool Connected { get; set; }

@@ -10,6 +10,7 @@ namespace ImageServiceApp.ViewModel
 {
     interface IMainWinViewModel : INotifyPropertyChanged
     {
+        bool VM_IsConnected { get; }
         ICommand CloseCommand { get; set; }
     }
 }
