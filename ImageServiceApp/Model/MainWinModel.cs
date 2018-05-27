@@ -1,11 +1,6 @@
 ﻿using ImageServiceApp.Communication;
-
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ImageServiceApp.Model
 {
@@ -30,6 +25,7 @@ namespace ImageServiceApp.Model
         {
             GuiClient = Client.Instance;
             IsConnected = GuiClient.Connected;
+          
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

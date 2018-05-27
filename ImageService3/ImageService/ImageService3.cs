@@ -9,6 +9,7 @@ using ImageService.Controller;
 using ImageService.Modal;
 using System.Configuration;
 using System.Collections.Generic;
+using ImageService.Infrastructure.Enums;
 
 namespace ImageService3
 {
@@ -24,7 +25,7 @@ namespace ImageService3
         private IImageServiceModal modal;
         private IImageController controller;
         private ILoggingService logging;
-        private TcpServer imageServiceSrv;
+        private TcpServer tcpServer;
         private List<Tuple<string, bool>> loggsMessages;
 
         public enum ServiceState
@@ -64,6 +65,7 @@ namespace ImageService3
                 //read params from app config
                 string eventSourceName = ConfigurationManager.AppSettings.Get("SourceName");
                 string logName = ConfigurationManager.AppSettings.Get("LogName");
+
                 eventLog1 = new System.Diagnostics.EventLog();
                 if (!System.Diagnostics.EventLog.SourceExists(eventSourceName))
                 {
@@ -71,6 +73,7 @@ namespace ImageService3
                 }
                 eventLog1.Source = eventSourceName;
                 eventLog1.Log = logName;
+
                 //initialize members
                 this.logging = new LoggingService(this.eventLog1);
                 this.logging.MessageRecieved += WriteMessage;
@@ -78,18 +81,21 @@ namespace ImageService3
                 {
                     OutputFolder = ConfigurationManager.AppSettings.Get("OutputDir"),
                     ThumbnailSize = Int32.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"))
-
-                };
+            
+            };
+                
                 this.controller = new ImageController(this.modal, this.logging);
                 this.m_imageServer = new ImageServer(controller, logging);
                 this.controller.ImageServer = m_imageServer;
                 IClientHandler ch = new ClientHandler(controller, logging);
                 int port = 8000;
-                imageServiceSrv = new TcpServer(port, logging, ch);
-                ImageServer.NotifyAllHandlerRemoved += imageServiceSrv.NotifyAllClientsAboutUpdate;
-                this.logging.UpdateLogEntries += imageServiceSrv.NotifyAllClientsAboutUpdate;
-                imageServiceSrv.Start();
-
+              
+                tcpServer = new TcpServer(port, logging, ch);
+                ImageServer.NotifyAllHandlerRemoved += tcpServer.NotifyAllClientsAboutUpdate;
+                this.logging.UpdateLogEntries += tcpServer.NotifyAllClientsAboutUpdate;
+            
+                tcpServer.Start();
+               
             }
             catch (Exception e)
             {
@@ -141,13 +147,13 @@ namespace ImageService3
             {
                 this.logging.InvokeUpdateEvent("In onStop", MessageTypeEnum.INFO);
             }
-            this.m_imageServer.StopServer();
+            this.m_imageServer.OnCloseServer();
             eventLog1.WriteEntry("Leave onStop.");
             if (this.logging != null)
             {
                 this.logging.InvokeUpdateEvent("onStop", MessageTypeEnum.INFO);
             }
-            this.imageServiceSrv.Stop();
+            this.tcpServer.Stop();
         }
         /// <summary>
         /// OnContinue function.
@@ -162,6 +168,13 @@ namespace ImageService3
             }
 
         }
+
+        public void OnDebug()
+        {
+            OnStart(null);
+        }
+
+
         /// <summary>
         /// OnTimer function.
         /// </summary>

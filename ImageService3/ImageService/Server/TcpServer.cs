@@ -17,7 +17,7 @@ using System.Windows;
 
 namespace ImageService.Server
 {
-    public class TcpServer : ITcpServer
+     class TcpServer : ITcpServer
     {
         ILoggingService Logging { get; set; }
         int Port { get; set; }
@@ -48,8 +48,9 @@ namespace ImageService.Server
         {
             try
             {
+                string port = "127.0.0.1";
                 IPEndPoint ep = new
-                IPEndPoint(IPAddress.Parse("127.0.0.1"), Port);
+                IPEndPoint(IPAddress.Parse(port), Port);
                 Listener = new TcpListener(ep);
 
                 Listener.Start();
@@ -67,7 +68,6 @@ namespace ImageService.Server
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.ToString());
                             break;
                         }
                     }
@@ -108,9 +108,11 @@ namespace ImageService.Server
                         {
                             NetworkStream stream = client.GetStream();
                             BinaryWriter writer = new BinaryWriter(stream);
+                          
                             string jsonCommand = JsonConvert.SerializeObject(commandRecievedEventArgs);
+                        
                             m_mutex.WaitOne();
-                            writer.Write(jsonCommand);
+                            writer.Write(jsonCommand); 
                             m_mutex.ReleaseMutex();
                         }
                         catch (Exception ex)

@@ -13,12 +13,12 @@ namespace ImageServiceApp.Model
     {
         public IClient GuiClient { get; set; }
         private string m_tumbnailSize;
-        private string m_logName;
         private string m_outputDirectory;
         private string m_sourceName;
+        private string m_logName;
 
         /// <summary>
-        ///Constructor
+        /// SettingModel constructor.
         /// </summary>
         public SettingsModel()
         {
@@ -52,7 +52,7 @@ namespace ImageServiceApp.Model
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+
             }
         }
         /// <summary>
@@ -64,10 +64,10 @@ namespace ImageServiceApp.Model
         {
             try
             {
-                this.OutputDirectory = responseObj.Args[0];
+                this.OutputDirectory = responseObj.Args[0]; 
                 this.SourceName = responseObj.Args[1];
                 this.LogName = responseObj.Args[2];
-                this.TumbSize = responseObj.Args[3];
+                this.TumbnailSize = responseObj.Args[2];
                 string[] handlers = responseObj.Args[4].Split(';');
                 foreach (string handler in handlers)
                 {
@@ -76,19 +76,19 @@ namespace ImageServiceApp.Model
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+
             }
         }
         /// <summary>
         /// CloseHandler function.
         /// </summary>
         /// <param name="responseObj">the info came from srv</param>
-        private void CloseHandler(CommandRecievedEventArgs responseObj)
+        private void CloseHandler(CommandRecievedEventArgs responseCommand)
         {
-            if (Handlers != null && Handlers.Count > 0 && responseObj != null && responseObj.Args != null
-                                 && Handlers.Contains(responseObj.Args[0]))
+            if (responseCommand != null && responseCommand.Args != null && Handlers != null && Handlers.Count > 0
+                 && Handlers.Contains(responseCommand.Args[0]))
             {
-                this.Handlers.Remove(responseObj.Args[0]);
+                this.Handlers.Remove(responseCommand.Args[0]);
             }
         }
         /// <summary>
@@ -102,7 +102,7 @@ namespace ImageServiceApp.Model
                 this.OutputDirectory = string.Empty;
                 this.SourceName = string.Empty;
                 this.LogName = string.Empty;
-                this.TumbSize = string.Empty;
+                this.TumbnailSize = string.Empty;
                 Handlers = new ObservableCollection<string>();
                 Object thisLock = new Object();
                 BindingOperations.EnableCollectionSynchronization(Handlers, thisLock);
@@ -112,23 +112,22 @@ namespace ImageServiceApp.Model
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+
             }
         }
 
-
-
+     
+       
         public string OutputDirectory
         {
             get { return m_outputDirectory; }
             set
             {
                 m_outputDirectory = value;
-                OnPropertyChanged("OutputDirectory");
+                OnPropertyChanged("OutputDir");
             }
         }
-
-
+       
         public string SourceName
         {
             get { return m_sourceName; }
@@ -138,7 +137,7 @@ namespace ImageServiceApp.Model
                 OnPropertyChanged("SourceName");
             }
         }
-
+       
         public string LogName
         {
             get { return m_logName; }
@@ -148,21 +147,19 @@ namespace ImageServiceApp.Model
                 OnPropertyChanged("LogName");
             }
         }
-
-        public string TumbSize
+       
+        public string TumbnailSize
         {
             get { return m_tumbnailSize; }
             set
             {
                 m_tumbnailSize = value;
-                OnPropertyChanged("TumbnailSize");
+                OnPropertyChanged("ThumbnailSize");
             }
         }
-
         public ObservableCollection<string> Handlers { get; set; }
-        #region Notify Changed
+       
         public event PropertyChangedEventHandler PropertyChanged;
-
         /// <summary>
         /// OnPropertyChanged function.
         /// defines what happens when property changed.
@@ -173,8 +170,7 @@ namespace ImageServiceApp.Model
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
+      
 
-        #endregion
     }
-
 }

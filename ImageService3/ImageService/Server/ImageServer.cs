@@ -20,7 +20,7 @@ namespace ImageService.Server
         #region Properties
         public delegate void NotifyAllClients(CommandRecievedEventArgs commandRecievedEventArgs);
         public static event NotifyAllClients NotifyAllHandlerRemoved;
-        public event EventHandler<CommandRecievedEventArgs> CommandRecieved;          // The event that notifies about a new Command being recieved
+        public event EventHandler<CommandRecievedEventArgs> CommandRecieved;        
         public event EventHandler<DirectoryCloseEventArgs> CloseServer;
         public IImageController Controller
         {
@@ -49,7 +49,6 @@ namespace ImageService.Server
             this.m_logging = logging;
             this.Handlers = new Dictionary<string, IDirectoryHandler>();
             string[] directories = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
-
             foreach (string path in directories)
             {
                 try
@@ -58,7 +57,7 @@ namespace ImageService.Server
                 }
                 catch (Exception ex)
                 {
-                    this.m_logging.Log("Error while creating handler for directory: " + path + " because:" + ex.ToString(), MessageTypeEnum.FAIL);
+                    this.m_logging.Log("Error create handler because:" + ex.ToString(), MessageTypeEnum.FAIL);
                 }
             }
         }
@@ -96,20 +95,20 @@ namespace ImageService.Server
             this.m_logging.Log("Handler was created for directory: " + path, MessageTypeEnum.INFO);
         }
         /// <summary>
-        /// the function that closes the server.
+        /// OnCloseServer function.
+        /// defines what happens when we close the server
         /// </summary>
-        public void StopServer()
+        public void OnCloseServer()
         {
             try
             {
-                m_logging.Log("Stop Server", MessageTypeEnum.INFO);
+                m_logging.Log("Enter OnCloseServer", MessageTypeEnum.INFO);
                 CloseServer?.Invoke(this, null);
-
-                //  m_logging.Log("Leave OnCloseServer", Logging.Modal.MessageTypeEnum.INFO);
+               
             }
             catch (Exception ex)
             {
-                this.m_logging.Log("Stop Server Exception: " + ex.ToString(), MessageTypeEnum.FAIL);
+                this.m_logging.Log("OnColeServer Exception: " + ex.ToString(), MessageTypeEnum.FAIL);
             }
         }
     }

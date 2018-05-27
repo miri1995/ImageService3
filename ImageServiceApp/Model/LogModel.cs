@@ -66,13 +66,14 @@ namespace ImageServiceApp.Model
             {
                 switch (responseObj.CommandID)
                 {
-                    case (int)CommandEnum.AddLogEntry:
-                        AddLogEntry(responseObj);
-                        break;
+                   
                     case (int)CommandEnum.LogCommand:
                         IntializeLogEntriesList(responseObj);
                         break;
-                    
+                    case (int)CommandEnum.AddLogEntry:
+                        AddLogEntry(responseObj);
+                        break;
+
                     default:
                         break;
                 }

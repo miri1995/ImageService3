@@ -15,18 +15,18 @@ namespace ImageServiceApp.ViewModel
         {
             if (targetType.Name != "Brush")
             {
-                throw new InvalidOperationException("Must convert to a brush!");
+                throw new InvalidOperationException("Should converter to brush");
             }
 
             string type = (string)value;
             switch (type)
             {
                 case "INFO":
-                    return System.Windows.Media.Brushes.LightGreen;
+                    return Brushes.LightGreen;
                 case "WARNING":
-                    return System.Windows.Media.Brushes.Yellow;
+                    return Brushes.Yellow;
                 case "FAIL":
-                    return System.Windows.Media.Brushes.Coral;
+                    return Brushes.LightSalmon;
             }
             return Brushes.Transparent;
         }

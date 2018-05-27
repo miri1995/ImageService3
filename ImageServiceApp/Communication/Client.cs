@@ -14,11 +14,11 @@ namespace ImageServiceApp.Communication
     public class Client: IClient
     {
         private TcpClient client;
-        private bool m_isStopped;
+        private bool stopped;
         public delegate void UpdateResponseArrived(CommandRecievedEventArgs responseObj);
         public event Communication.UpdateResponseArrived UpdateResponse;
-        private static Client m_instance;
-        private static Mutex m_mutex = new Mutex();
+        private static Client clientInstance;
+        private static Mutex mutex = new Mutex();
         public bool Connected { get; set; }
 
         /// <summary>
@@ -36,11 +36,11 @@ namespace ImageServiceApp.Communication
         {
             get
             {
-                if (m_instance == null)
+                if (clientInstance == null)
                 {
-                    m_instance = new Client();
+                    clientInstance = new Client();
                 }
-                return m_instance;
+                return clientInstance;
             }
         }
 
@@ -59,7 +59,7 @@ namespace ImageServiceApp.Communication
                 client = new TcpClient();
                 client.Connect(ep);
                 Console.WriteLine("Succeed connected");
-                m_isStopped = false;
+                stopped = false;
                 return result;
             }
             catch (Exception ex)
@@ -85,9 +85,9 @@ namespace ImageServiceApp.Communication
                     BinaryWriter writer = new BinaryWriter(stream);
                     // Send data to server
                     Console.WriteLine($"Send {jsonCommand} to Server");
-                    m_mutex.WaitOne();
+                    mutex.WaitOne();
                     writer.Write(jsonCommand);
-                    m_mutex.ReleaseMutex();
+                    mutex.ReleaseMutex();
                 }
                 catch (Exception ex)
                 {
@@ -106,7 +106,7 @@ namespace ImageServiceApp.Communication
             {
                 try
                 {
-                    while (!m_isStopped)
+                    while (!stopped)
                     {
                         NetworkStream stream = client.GetStream();
                         BinaryReader reader = new BinaryReader(stream);
@@ -129,7 +129,9 @@ namespace ImageServiceApp.Communication
             CommandRecievedEventArgs commandRecievedEventArgs = new CommandRecievedEventArgs((int)CommandEnum.Disconnected, null, "");
             this.SendCommand(commandRecievedEventArgs);
             client.Close();
-            this.m_isStopped = true;
+            this.stopped = true;
         }
+
+
     }
 }

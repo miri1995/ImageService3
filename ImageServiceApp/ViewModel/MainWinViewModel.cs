@@ -1,11 +1,7 @@
 ﻿using ImageServiceApp.Model;
 using Prism.Commands;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ImageServiceApp.ViewModel
@@ -33,7 +29,7 @@ namespace ImageServiceApp.ViewModel
             this.m_mainWindowModel.PropertyChanged +=
             delegate (Object sender, PropertyChangedEventArgs e)
             {
-                NotifyPropertyChanged("VM_" + e.PropertyName);
+                NotifyPropertyChanged("View Model" + e.PropertyName);
             };
 
             this.CloseCommand = new DelegateCommand<object>(this.Close, this.CanClose);

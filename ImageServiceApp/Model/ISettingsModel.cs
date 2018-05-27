@@ -16,7 +16,7 @@ namespace ImageServiceApp.Model
         string OutputDirectory { get; set; }
         string SourceName { get; set; }
         string LogName { get; set; }
-        string TumbSize { get; set; }
+        string TumbnailSize { get; set; }
         ObservableCollection<string> Handlers { get; set; }
         IClient GuiClient { get; set; }
 

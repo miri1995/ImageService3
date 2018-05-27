@@ -11,18 +11,16 @@ namespace ImageServiceApp.ViewModel
 {
     class SettingsViewModel:ISettingsViewModel
     {
-        private string selectedItem;
-
         public SettingsViewModel()
         {
             this.model = new SettingsModel();
             model.PropertyChanged +=
             delegate (Object sender, PropertyChangedEventArgs e)
             {
-                NotifyPropertyChanged("View Model" + e.PropertyName);
+                NotifyPropertyChanged("VM_" + e.PropertyName);
 
             };
-            this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.Remove);
+            this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
 
         }
 
@@ -44,34 +42,45 @@ namespace ImageServiceApp.ViewModel
         {
             get { return model.Handlers; }
         }
-        public string OutputDirectory
+        public string VM_OutputDirectory
         {
             get { return model.OutputDirectory; }
         }
-        public string SourceName
+        public string VM_SourceName
         {
             
             get { return model.SourceName; }
-            
         }
-        public string LogName
+        public string VM_LogName
         {
             get { return model.LogName; }
         }
-        public string TumbSize
+        public string VM_TumbnailSize
         {
-            get { return model.TumbSize; }
+            get { return model.TumbnailSize; }
         }
         #endregion
 
         #region CommandsLogic
         public ICommand RemoveCommand { get; set; }
-       
+        /// <summary>
+        /// OnRemove function.
+        /// tells what will happen when we press Remove button.
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnRemove(object obj)
         {
+            try
+            {
                 string[] arr = { this.selectedItem };
                 CommandRecievedEventArgs eventArgs = new CommandRecievedEventArgs((int)CommandEnum.CloseHandler, arr, "");
                 this.model.GuiClient.SendCommand(eventArgs);
+            }
+            catch (Exception ex)
+            {
+
+            }
+
         }
         /// <summary>
         /// CanRemove function.
@@ -79,12 +88,12 @@ namespace ImageServiceApp.ViewModel
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        private bool Remove(object obj)
+        private bool CanRemove(object obj)
         {
             bool result = this.selectedItem != null ? true : false;
             return result;
         }
-      
+        private string selectedItem;
         public string SelectedItem
         {
             get
@@ -99,6 +108,5 @@ namespace ImageServiceApp.ViewModel
             }
         }
         #endregion
-
     }
 }

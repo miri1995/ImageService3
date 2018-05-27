@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ImageService.Server
 {
-   public class ClientHandler : IClientHandler
+    class ClientHandler : IClientHandler
     {
         IImageController ImageController { get; set; }
         ILoggingService Logging { get; set; }
@@ -22,7 +22,7 @@ namespace ImageService.Server
         /// </summary>
         /// <param name="imageController">IImageController obj</param>
         /// <param name="logging">ILoggingService obj</param>
-        public ClientHandler(IImageController imageController, ILoggingService logging)
+        public ClientHandler(IImageController imageController, ILoggingService logging)//, ImageServer imageServer)
         {
             this.ImageController = imageController;
             this.Logging = logging;
@@ -62,7 +62,7 @@ namespace ImageService.Server
                                 break;
 
                             }
-                            Console.WriteLine("Got command: {0}", commandLine);
+                           
                             bool r;
                             string result = this.ImageController.ExecuteCommand((int)commandRecievedEventArgs.CommandID,
                                 commandRecievedEventArgs.Args, out r);

@@ -132,7 +132,7 @@ namespace ImageService.Modal
         /// <returns>a the message of adding the thumb file </returns>
         private string CreateTumbImage(string newPath, string path, string message, string year, string month)
         {
-            // create a thumb photo
+            
             string thumbsNewPath = m_OutputFolder + "\\" + "Thumbnails" + "\\" + year + "\\" + month + "\\" + Path.GetFileName(path);
             if (File.Exists(thumbsNewPath))
             {

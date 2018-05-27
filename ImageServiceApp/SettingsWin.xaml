@@ -6,36 +6,36 @@
              xmlns:local="clr-namespace:ImageServiceApp"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Grid TextBlock.FontSize="18" TextBlock.FontStyle="Italic" Background="MistyRose">
+    <DockPanel ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="-1,0,0,10">
+        <Label Content="Settings" FontSize="25" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Purple" RenderTransformOrigin="2.634,0.921" DockPanel.Dock="Top"/>
+
+        <Grid TextBlock.FontSize="14">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+               
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" TextBlock.FontSize="26" FontWeight="Bold" TextBlock.Foreground="Navy" Padding="3" Margin="3">Settings</TextBlock>
-
-            <TextBlock Grid.Row="1" Padding="3" FontWeight="Bold" Margin="3">Output Directory:</TextBlock>
-            <TextBlock Padding="3" Grid.Column="2" Text="{Binding OutputDirectory}" Margin="3"></TextBlock>
-
-            <TextBlock Grid.Row="2" Padding="3" FontWeight="Bold" Margin="3">Source Name:</TextBlock>
-            <TextBlock Padding="3" Grid.Row="1" Grid.Column="2" Text="{Binding SourceName}" Margin="3"></TextBlock>
-            <TextBlock Grid.Row="3" Padding="3" FontWeight="Bold" Margin="3">Log Name:</TextBlock>
-            <TextBlock Grid.Row="2" Padding="3" Grid.Column="2" Text="{Binding LogName}" Margin="3"></TextBlock>
-
-            <TextBlock Grid.Row="4" Padding="3" FontWeight="Bold" Margin="3">Thumbnail Size:</TextBlock>
-            <TextBlock Grid.Row="3" Padding="3" Grid.Column="2" Text="{Binding TumbSize}" Margin="3"></TextBlock>
-            <Button x:Name="btnRemove" Grid.Row="4"  HorizontalContentAlignment="Center"   Command="{Binding RemoveCommand}" AutomationProperties.AutomationId="btnRemove" Grid.ColumnSpan="2">Remove</Button>
-            <ListBox x:Name="lsbHandlers" Grid.Row="5" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch"   SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding VM_Handlers}"
+            <TextBlock Padding="3" FontWeight="Bold" Margin="3">Output Directory:</TextBlock>
+            <TextBlock Padding="3" Grid.Column="2" Text="{Binding VM_OutputDirectory}" Margin="3"></TextBlock>
+            <TextBlock Grid.Row="1" FontWeight="Bold" Padding="3" Margin="3">Source Name:</TextBlock>
+            <TextBlock Padding="3" Grid.Row="1" Grid.Column="2" Text="{Binding VM_SourceName}" Margin="3"></TextBlock>
+            <TextBlock Grid.Row="2" Padding="3"  FontWeight="Bold" Margin="3">Log Name:</TextBlock>
+            <TextBlock Grid.Row="2" Padding="3" Grid.Column="2" Text="{Binding VM_LogName}" Margin="3"></TextBlock>
+            <TextBlock Grid.Row="3" Padding="3"  FontWeight="Bold" Margin="3">Thumbnail size:</TextBlock>
+            <TextBlock Grid.Row="3" Padding="3" Grid.Column="2" Text="{Binding VM_TumbnailSize}" Margin="3"></TextBlock>
+            <Button x:Name="btnRemove" Grid.Row="4"  HorizontalContentAlignment="Center"  Command="{Binding RemoveCommand}"  AutomationProperties.AutomationId="btnRemove" Grid.ColumnSpan="2">Remove</Button>
+            <ListBox x:Name="lsbHandlers" Grid.Row="5" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch"  SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding VM_Handlers}"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
             </ListBox>
         </Grid>
-    </Grid>
+    </DockPanel>
+
 </UserControl>
