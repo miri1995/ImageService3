@@ -133,7 +133,7 @@ namespace ImageServiceWebApp.Communication
         /// </summary>
         public void CloseClient()
         {
-            CommandRecievedEventArgs commandRecievedEventArgs = new CommandRecievedEventArgs((int)CommandEnum.CloseClient, null, "");
+            CommandRecievedEventArgs commandRecievedEventArgs = new CommandRecievedEventArgs((int)CommandEnum.Disconnected, null, "");
             this.SendCommand(commandRecievedEventArgs);
             client.Close();
             this.m_isStopped = true;
