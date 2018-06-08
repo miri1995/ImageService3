@@ -11,7 +11,7 @@ namespace ImageServiceWebApp.Enum
         /// <summary>
         /// CommandRecievedEventArgs class inherits from EventArgs.
         /// </summary>
-        {
+       
             #region Members
             public int CommandID { get; set; }      // The Command ID
             public string[] Args { get; set; }
@@ -31,4 +31,4 @@ namespace ImageServiceWebApp.Enum
                 RequestDirPath = path;
             }
         }
-    }
+  }

@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using static ImageServiceWebApp.Models.ImageWebInfo;
 
-namespace ImgServiceWebApplication.Models
+namespace ImageServiceWebApp.Models
 {
     public class ImageWebController : Controller
     {

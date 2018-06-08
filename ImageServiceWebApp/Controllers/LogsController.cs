@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ImgServiceWebApplication.Controllers
+namespace ImageServiceWebApp.Controllers
 {
     public class LogsController : Controller
     {
