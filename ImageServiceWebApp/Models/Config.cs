@@ -9,7 +9,7 @@ using System.Linq;
 using System.Web;
 
 
-namespace ImgServiceWebApplication.Models
+namespace ImageServiceWebApp.Models
 {
     public class Config
     {

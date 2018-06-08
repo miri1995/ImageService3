@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using ImageService.Logging;
 
 namespace ImageServiceWebApp.Models
 {
@@ -99,7 +100,7 @@ namespace ImageServiceWebApp.Models
         {
             try
             {
-                foreach (LogEntry log in JsonConvert.DeserializeObject<ObservableCollection<LogEntry>>(responseObj.Args[0]))
+                foreach (LogMessage log in JsonConvert.DeserializeObject<ObservableCollection<LogMessage>>(responseObj.Args[0]))
                 {
                     LogEntries.Add(new Log { EntryType = log.Type, Message = log.Message });
                 }
@@ -117,7 +118,7 @@ namespace ImageServiceWebApp.Models
         {
             try
             {
-                LogEntry newLogEntry = new LogEntry { Type = responseObj.Args[0], Message = responseObj.Args[1] };
+                LogMessage newLogEntry = new LogMessage { Type = responseObj.Args[0], Message = responseObj.Args[1] };
                 this.LogEntries.Insert(0, new Log { EntryType = newLogEntry.Type, Message = newLogEntry.Message });
             }
             catch (Exception ex)
