@@ -1,0 +1,16 @@
+﻿@model ImageServiceWebApp.Models.DeletePhoto
+
+@{
+    ViewBag.Title = "DeleteView";
+}
+
+<h2>DeleteView</h2>
+Are you sure to delete this image?
+<h3></h3>
+
+<img src="/@Model.Thumbnail.Replace(Server.MapPath("~"), "").Replace("\\", "/")" alt="Avatar">
+
+
+
+@Model.Name
+

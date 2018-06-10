@@ -151,11 +151,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Config.cs" />
+    <Compile Include="Models\Confirm.cs" />
+    <Compile Include="Models\DeletePhoto.cs" />
     <Compile Include="Models\ImageWebInfo.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\LogCollection.cs" />
     <Compile Include="Models\Photo.cs" />
-    <Compile Include="Models\PhotosCollection.cs" />
+    <Compile Include="Models\PhotosV.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +176,9 @@
     <Content Include="Views\Home\Logs.cshtml" />
     <Content Include="Views\Home\Config.cshtml" />
     <Content Include="Views\Home\Photos.cshtml" />
+    <Content Include="Views\Home\ViewPhotos.cshtml" />
+    <Content Include="Views\Home\DeleteView.cshtml" />
+    <Content Include="Views\Home\Confirm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

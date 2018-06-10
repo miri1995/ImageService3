@@ -1,0 +1,13 @@
+﻿@model ImageServiceWebApp.Models.PhotosV
+@{
+    ViewBag.Title = "ViewPhotos";
+}
+
+<h2>ViewPhotos</h2>
+
+
+   <img src="/@Model.Original.Replace(Server.MapPath("~"),"").Replace("\\","/")" >
+@Model.Name
+
+
+}

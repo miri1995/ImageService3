@@ -60,9 +60,10 @@
             @foreach (var item in Model.Handlers)
                 {
                 <tr>
-
+                    <td>
+                        @Html.ActionLink(item, "DeleteHandler","home", new { toDelete = item })
+                    </td>
                    
-
                 </tr>
             }
 

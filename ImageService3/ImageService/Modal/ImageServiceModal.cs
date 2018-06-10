@@ -29,8 +29,7 @@ namespace ImageService.Modal
         public string CounterImages()
         {
            
-            DirectoryInfo dirOutput = new DirectoryInfo(OutputFolder);
-            int count = dirOutput.GetFiles().Length;
+            int count = Directory.GetFiles(OutputFolder, "*", SearchOption.AllDirectories).Length;
             return count.ToString();
         }
 

@@ -14,6 +14,8 @@ namespace ImageServiceWebApp.Controllers
         static Log log_model = new Log();
         static ImageWebInfo imageWeb_model;
          static Photo photo_model;
+        static DeletePhoto deletePoto_model;
+        private static string to_delete;
 
 
 
@@ -24,6 +26,9 @@ namespace ImageServiceWebApp.Controllers
             imageWeb_model = new ImageWebInfo();
             // log_model = new Log();
             photo_model = new Photo(config_model.OutputDirectory);
+      
+            //deletePoto_model=new DeletePhoto();
+
 
         }
 
@@ -54,6 +59,33 @@ namespace ImageServiceWebApp.Controllers
         {
             return View(photo_model);
         }
-        
+
+ 
+
+        public ActionResult DeleteHandler(string toDelete)
+        {
+            to_delete = toDelete;
+            config_model.DeleteHandler(to_delete);
+            return View(config_model);
+        }
+
+        public ActionResult DeleteView(string path, string name)
+        {
+            return View(new DeletePhoto(path , name));
+        }
+
+        public ActionResult ViewPhotos(string path, string name/*,string date*/)
+        {
+            return View(new PhotosV(path, name/*,date*/));
+        }
+
+        /*   public ActionResult DeleteH(string toDelete)
+           {
+               to_delete = toDelete;
+               return View(confirm_model);
+           }*/
+
+
+
     }
 }
