@@ -84,6 +84,7 @@
     <Compile Include="ImageService.Logging\Modal\MessageTypeEnum.cs" />
     <Compile Include="ImageService\Commands\CloseCommand.cs" />
     <Compile Include="ImageService\Commands\GetConfigCommand.cs" />
+    <Compile Include="ImageService\Commands\ImageWebCommand.cs" />
     <Compile Include="ImageService\Commands\LogCommand.cs" />
     <Compile Include="ImageService\ImageService3.cs">
       <SubType>Component</SubType>

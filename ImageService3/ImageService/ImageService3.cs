@@ -27,6 +27,7 @@ namespace ImageService3
         private ILoggingService logging;
         private TcpServer tcpServer;
         private List<Tuple<string, bool>> loggsMessages;
+        private bool statusRun;
 
         public enum ServiceState
         {
@@ -61,6 +62,7 @@ namespace ImageService3
         {
             try
             {
+                statusRun = false;
                 InitializeComponent();
                 //read params from app config
                 string eventSourceName = ConfigurationManager.AppSettings.Get("SourceName");
@@ -77,12 +79,16 @@ namespace ImageService3
                 //initialize members
                 this.logging = new LoggingService(this.eventLog1);
                 this.logging.MessageRecieved += WriteMessage;
-                this.modal = new ImageServiceModal()
+
+
+                string outPutFolder = ConfigurationManager.AppSettings.Get("OutputDir");
+
+                this.modal = new ImageServiceModal(outPutFolder)
                 {
                     OutputFolder = ConfigurationManager.AppSettings.Get("OutputDir"),
                     ThumbnailSize = Int32.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"))
             
-            };
+                };
                 
                 this.controller = new ImageController(this.modal, this.logging);
                 this.m_imageServer = new ImageServer(controller, logging);
@@ -115,6 +121,7 @@ namespace ImageService3
             if (this.logging != null)
             {
                 this.logging.InvokeUpdateEvent("In OnStart", MessageTypeEnum.INFO);
+                statusRun = true;
             }
             // Update the service state to Start Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
@@ -146,6 +153,7 @@ namespace ImageService3
             if (this.logging != null)
             {
                 this.logging.InvokeUpdateEvent("In onStop", MessageTypeEnum.INFO);
+                statusRun = false;
             }
             this.m_imageServer.OnCloseServer();
             eventLog1.WriteEntry("Leave onStop.");

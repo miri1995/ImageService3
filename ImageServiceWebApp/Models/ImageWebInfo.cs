@@ -1,4 +1,8 @@
-﻿using System;
+﻿using ImageService.Infrastructure.Enums;
+
+using ImageServiceWebApp.Communication;
+using ImageServiceWebApp.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
@@ -8,131 +12,141 @@ using static ImageServiceWebApp.Models.Config;
 
 namespace ImageServiceWebApp.Models
 {
+
+
     public class ImageWebInfo
     {
-        private static Communication.IImageServiceClient GuiClient { get; set; }
-        public event NotifyAboutChange NotifyEvent;
-        private static Config m_config;
-        private static string m_outputDir;
+        private IImageServiceClient client;
+        public event NotifyAboutChange Notify;
 
-        /// <summary>
-        /// ImageWebInfo constructor.
-        /// initialize new ImageWebInfo obj.
-        /// </summary>
-        public ImageWebInfo()
+        public ImageWebInfo() {
+            Counter = "";
+
+           
+            this.client = ImageServiceClient.Instance;
+            this.client.RecieveCommand();
+            this.client.UpdateResponse += UpdateResponse;
+            Students = getList();
+            string[] arr = new string[1];
+            CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.ImageWebCommand, arr, "");
+            this.client.SendCommand(request);
+
+           
+
+        }
+
+     
+
+        private void UpdateResponse(CommandRecievedEventArgs responseObj)
         {
             try
             {
-                GuiClient = Communication.ImageServiceClient.Instance;
-                IsConnected = GuiClient.IsConnected;
-                NumofPics = 0;
-                m_config = new Config();
-                m_config.Notify += Notify;
-                Students = GetStudents();
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-
-        /// <summary>
-        /// Notify function.
-        /// notifies controller about change.
-        /// </summary>
-        void Notify()
-        {
-            if (m_config.OutputDirectory != "")
-            {
-                m_outputDir = m_config.OutputDirectory;
-                NumofPics = GetNumOfPics();
-                NotifyEvent?.Invoke();
-            }
-        }
-
-        /// <summary>
-        /// GetNumOfPics function.
-        /// </summary>
-        /// <param name="outputDir">the pics output dir</param>
-        /// <returns></returns>
-        public static int GetNumOfPics()
-        {
-            try
-            {
-                if (m_outputDir == null || m_outputDir == "")
+                if (responseObj != null)
                 {
-                    return 0;
+                    switch (responseObj.CommandID)
+                    {
+                        case (int)ImageService.Infrastructure.Enums.CommandEnum.ImageWebCommand:
+                            UpdateConfigurations(responseObj);
+                            break;
+
+                    }
+                    //update controller
+                    Notify?.Invoke();
                 }
-                int counter = 0;
-                while (m_outputDir == null && (counter < 2)) { System.Threading.Thread.Sleep(1000); counter++; }
-                int sum = 0;
-                DirectoryInfo di = new DirectoryInfo(m_outputDir);
-                sum += di.GetFiles("*.PNG", SearchOption.AllDirectories).Length;
-                sum += di.GetFiles("*.BMP", SearchOption.AllDirectories).Length;
-                sum += di.GetFiles("*.JPG", SearchOption.AllDirectories).Length;
-                sum += di.GetFiles("*.GIF", SearchOption.AllDirectories).Length;
-                return sum / 2;
             }
             catch (Exception ex)
             {
-                return 0;
+                
             }
+
         }
 
-        /// <summary>
-        /// GetStudents function.
-        /// gets student details.
-        /// </summary>
-        /// <returns></returns>
-        public static List<Student> GetStudents()
+        private void UpdateConfigurations(CommandRecievedEventArgs responseObj)
         {
-            List<Student> students = new List<Student>();
             try
             {
-                StreamReader file = new StreamReader(System.Web.HttpContext.Current.Server.MapPath("~/App_Data/StudentsDetails.txt"));
-                string line;
-
-                while ((line = file.ReadLine()) != null)
-                {
-                    string[] param = line.Split(',');
-                    students.Add(new Student() { FirstName = param[0], LastName = param[1], ID = param[2] });
-                }
-                file.Close();
+                Counter = responseObj.Args[0];
+              
             }
             catch (Exception ex)
             {
 
             }
-            return students;
         }
-
-        //members
-        [Required]
-        [Display(Name = "Is Connected")]
-        public bool IsConnected { get; set; }
 
         [Required]
-        [Display(Name = "Num of Pics")]
-        public int NumofPics { get; set; }
+        [DataType(DataType.Text)]
+        [Display(Name = "Status")]
+        public string Status { get; set; }
+
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Counter")]
+        public string Counter { get; set; }
+
 
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Students")]
         public List<Student> Students { get; set; }
 
+        public static List<Student> getList() {
+
+          
+                List<Student> list = new List<Student>();
+                StreamReader stream = new StreamReader(HttpContext.Current.Server.MapPath("~/App_Data/StudentsDetails.txt"));
+                string line = stream.ReadLine();
+                while (line != null)
+                {
+                    string[] token = line.Split(',');
+                    list.Add(new Student(token[0], token[1], token[2]));
+                    line = stream.ReadLine();
+                }
+                stream.Close();
+                return list;
+    }
+
+
         public class Student
         {
+            private string firstName;
+            private string lastName;
+            private string id;
+
+            public Student(string firstName, string lastName, string id)
+            {
+                this.firstName = firstName;
+                this.lastName = lastName;
+                this.id = id;
+            }
+
             [Required]
+            [DataType(DataType.Text)]
             [Display(Name = "First Name")]
-            public string FirstName { get; set; }
+            public string FirstName {
+                get { return this.firstName; }
+                set { this.firstName = value; }
+            }
 
             [Required]
+            [DataType(DataType.Text)]
             [Display(Name = "Last Name")]
-            public string LastName { get; set; }
+            public string LastName
+            {
+                get { return this.lastName; }
+                set { this.lastName = value; }
+            }
 
             [Required]
+            [DataType(DataType.Text)]
             [Display(Name = "ID")]
-            public string ID { get; set; }
+            public string ID
+            {
+                get { return this.id; }
+                set { this.id = value; }
+            }
+
         }
     }
 }

@@ -9,7 +9,7 @@ namespace ImageServiceWebApp.Models
 {
     public class PhotosCollection
     {
-        public event NotifyAboutChange NotifyEvent;
+       // public event NotifyAboutChange NotifyEvent;
         private static Config m_config;
         private string m_outputDir;
         public List<Photo> PhotosList = new List<Photo>();
@@ -20,7 +20,7 @@ namespace ImageServiceWebApp.Models
         public PhotosCollection()
         {
             m_config = new Config();
-            m_config.Notify += Notify;
+           // m_config.Notify += Notify;
         }
         /// <summary>
         /// Notify function.
@@ -32,7 +32,7 @@ namespace ImageServiceWebApp.Models
             {
                 m_outputDir = m_config.OutputDirectory;
                 GetPhotos();
-                NotifyEvent?.Invoke();
+            //    NotifyEvent?.Invoke();
             }
         }
 

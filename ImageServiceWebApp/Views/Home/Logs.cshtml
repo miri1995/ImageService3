@@ -1,0 +1,48 @@
+﻿@model ImageServiceWebApp.Models.Log
+
+
+
+@{
+    ViewBag.Title = "Logs";
+}
+
+<h2>Logs</h2>
+
+<div>
+    @using (Html.BeginForm("Logs", "Logs", FormMethod.Post))
+    {
+
+        <div>
+           
+            <input type="submit" id="submitId" value="Filter" class="btn-info" />
+
+        </div>
+
+    }
+
+</div>
+
+<br />
+<table class="table">
+    <tr>
+        <th>
+           Log Type
+        </th>
+        <th>
+            Message
+        </th>
+    </tr>
+
+    @foreach (var item in Model.stringList)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Item1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Item2)
+            </td>
+        </tr>
+    }
+
+</table>

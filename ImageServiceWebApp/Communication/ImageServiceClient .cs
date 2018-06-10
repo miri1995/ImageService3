@@ -1,4 +1,5 @@
 ﻿
+using ImageService.Infrastructure.Enums;
 using ImageServiceWebApp.Enum;
 using Newtonsoft.Json;
 using System;

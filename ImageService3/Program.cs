@@ -13,8 +13,8 @@ namespace ImageService3
         {
 
            // ImageService3 myService = new ImageService3(args);
-          //  myService.OnDebug();
-          //  System.Threading.Thread.Sleep(System.Threading.Timeout.Infinite);
+           // myService.OnDebug();
+           // System.Threading.Thread.Sleep(System.Threading.Timeout.Infinite);
 
             ServiceBase[] ServicesToRun = new ServiceBase[] { new ImageService3(args) };
            ServiceBase.Run(ServicesToRun);

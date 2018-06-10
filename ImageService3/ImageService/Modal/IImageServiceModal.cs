@@ -14,5 +14,8 @@ namespace ImageService.Modal
         ///  <param name="result">the result is true or false/param>
         /// <returns>a string if suceeded adding</returns>
         string AddFile(string path, out bool result);
+      //  string getCounter(out bool result);
+        string CounterImages();
+
     }
 }

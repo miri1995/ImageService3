@@ -76,10 +76,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.Data.Framework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -136,22 +138,15 @@
     <Content Include="scripts\jquery-1.10.2.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
-    <Content Include="Views\ImageWeb\ImageWeb.cshtml" />
-    <Content Include="Views\Config\Config.cshtml" />
-    <Content Include="Views\Config\Confirm.cshtml" />
-    <Content Include="Views\Logs\Logs.cshtml" />
     <Content Include="Views\Photos\PhotosViewer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Communication\IImageServiceClient.cs" />
     <Compile Include="Communication\ImageServiceClient .cs" />
-    <Compile Include="Controllers\ConfigController.cs" />
-    <Compile Include="Controllers\ImageWebController.cs" />
-    <Compile Include="Controllers\LogsController.cs" />
-    <Compile Include="Controllers\PhotosController.cs" />
-    <Compile Include="Enum\CommandEnum.cs" />
-    <Compile Include="Enum\CommandRecievedEventArgs.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Enum\CommandRecievedEventArgs1.cs" />
+    <Compile Include="Enum\LogMessage.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -175,6 +170,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Home\ImageWeb.cshtml" />
+    <Content Include="Views\Home\Logs.cshtml" />
+    <Content Include="Views\Home\Config.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -188,6 +186,7 @@
       <Name>ImageService3</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

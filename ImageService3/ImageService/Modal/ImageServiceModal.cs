@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ImageService.Infrastructure.Enums;
+using Newtonsoft.Json;
+using System;
 using System.Drawing;
 using System.IO;
 
@@ -13,9 +15,33 @@ namespace ImageService.Modal
         #region Members
         private string m_OutputFolder;            // The Output Folder
         private int m_thumbnailSize;              // The Size Of The Thumbnail Size
+        private int counter;
         #endregion
 
         #region Properties
+
+        public ImageServiceModal(string output)
+        {
+            OutputFolder = output;
+            this.counter = Int32.Parse(CounterImages());
+        }
+
+        public string CounterImages()
+        {
+           
+            DirectoryInfo dirOutput = new DirectoryInfo(OutputFolder);
+            int count = dirOutput.GetFiles().Length;
+            return count.ToString();
+        }
+
+       /* public string getCounter(out bool result) {
+            string[] arr = new string[1];
+            arr[0] = this.counter.ToString();
+            result = true;
+            return arr[0];
+        }*/
+
+       
 
         public string OutputFolder
         {
@@ -66,6 +92,7 @@ namespace ImageService.Modal
                     File.Move(path, newPath);
                     message = "Added " + Path.GetFileName(newPath) + " to " + pathTargetFolder;
                     message = CreateTumbImage(newPath, path, message, year.ToString(), month.ToString());
+                    counter++;
                     return message;
 
                 }

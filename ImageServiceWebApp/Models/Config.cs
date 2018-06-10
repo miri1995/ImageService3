@@ -1,5 +1,7 @@
 ﻿
 
+using ImageService.Infrastructure.Enums;
+using ImageServiceWebApp.Communication;
 using ImageServiceWebApp.Enum;
 using System;
 using System.Collections.Generic;
@@ -13,31 +15,33 @@ namespace ImageServiceWebApp.Models
 {
     public class Config
     {
+        // public delegate void NotifyAboutChange();
+        //  public event NotifyAboutChange Notify;
+        //  private static ImageServiceWebApp.Communication.IImageServiceClient GuiClient { get; set; }
+        private IImageServiceClient clien;
         public delegate void NotifyAboutChange();
         public event NotifyAboutChange Notify;
-        private static ImageServiceWebApp.Communication.IImageServiceClient GuiClient { get; set; }
-
-
         /// <summary>
         /// constructor.
         /// initialize new config params.
         /// </summary>
         public Config()
         {
+            SourceName = "";
+            LogName = "";
+            OutputDirectory = "";
+            ThumbnailSize = 1;
             try
             {
-                GuiClient = ImageServiceWebApp.Communication.ImageServiceClient.Instance;
-                GuiClient.RecieveCommand();
-                GuiClient.UpdateResponse += UpdateResponse;
-                SourceName = "";
-                LogName = "";
-                OutputDirectory = "";
-                ThumbnailSize = 1;
+                this.clien = ImageServiceClient.Instance;
+                this.clien.RecieveCommand();
+                this.clien.UpdateResponse += UpdateResponse;
+                
                 Handlers = new ObservableCollection<string>();
                 Enabled = false;
                 string[] arr = new string[5];
                 CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, arr, "");
-                GuiClient.SendCommand(request);
+                this.clien.SendCommand(request);
             }
             catch (Exception ex)
             {
@@ -55,7 +59,7 @@ namespace ImageServiceWebApp.Models
             {
                 string[] arr = { toBeDeleted };
                 CommandRecievedEventArgs eventArgs = new CommandRecievedEventArgs((int)CommandEnum.CloseHandler, arr, "");
-                GuiClient.SendCommand(eventArgs);
+                this.clien.SendCommand(eventArgs);
             }
             catch (Exception ex)
             {
@@ -143,6 +147,8 @@ namespace ImageServiceWebApp.Models
         [Required]
         [Display(Name = "Output Directory")]
         public string OutputDirectory { get; set; }
+
+
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Source Name")]

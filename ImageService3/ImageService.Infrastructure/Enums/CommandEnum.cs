@@ -17,7 +17,8 @@ namespace ImageService.Infrastructure.Enums
         LogCommand = 4,
         CloseHandler = 5,
         AddLogEntry = 6,
-        Disconnected = 7
+        Disconnected = 7,
+        ImageWebCommand=8
 
     }
 }
