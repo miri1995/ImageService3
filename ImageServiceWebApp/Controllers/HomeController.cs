@@ -11,15 +11,17 @@ namespace ImageServiceWebApp.Controllers
     {
         static ImageWebInfo imageWeb_model;
         static Config config_model;
-        static Log log_model = new Log();
-     
+        static Log log_model;
+       // static PhotosCollection photo_model;
+
 
 
         public HomeController()
         {
             imageWeb_model = new ImageWebInfo();
             config_model = new Config();
-          // log_model = new Log();
+           log_model = new Log();
+        //    photo_model = new PhotosCollection();
 
         }
 
@@ -45,5 +47,10 @@ namespace ImageServiceWebApp.Controllers
             return View(log_model);
         }
 
+     /*   public ActionResult PhotosViewer()
+        {
+            return View(photo_model);
+        }
+        */
     }
 }

@@ -20,6 +20,8 @@ namespace ImageServiceWebApp.Models
        
         public delegate void NotifyAboutChange();
         public event NotifyAboutChange Notify;
+        public event PropertyChangedEventHandler PropertyChanged;
+
 
         public Log()
         {
@@ -36,7 +38,9 @@ namespace ImageServiceWebApp.Models
         [Display(Name = "LogList")]
         public List<LogCollection> LogList { get; set; }
 
-
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "stringList")]
         public ObservableCollection<Tuple<string, string>> stringList { get; set; }
        
 
@@ -45,7 +49,7 @@ namespace ImageServiceWebApp.Models
             List<LogCollection> logList = new List<LogCollection>();
             stringList = new ObservableCollection<Tuple<string, string>>();
             BindingOperations.EnableCollectionSynchronization(stringList, new object());
-            stringList.CollectionChanged += (s, e)=>PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("stringList"));
+            stringList.CollectionChanged += (s, e)=> PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("stringList"));
             CommandRecievedEventArgs commandRecievedEventArgs = new CommandRecievedEventArgs((int)CommandEnum.LogCommand, null, "");
             this.client.SendCommand(commandRecievedEventArgs);
         }
@@ -80,7 +84,7 @@ namespace ImageServiceWebApp.Models
             {
                 foreach (LogMessage log in JsonConvert.DeserializeObject<ObservableCollection<LogMessage>>(responseObj.Args[0]))
                 {
-                 //  LogList.Add(new LogCollection { LogType = log.Type, Message = log.Message });
+                 // LogList.Add(new LogCollection { LogType = log.Type, Message = log.Message });
                    stringList.Add(new Tuple<string,string>(log.Type, log.Message));
                 }
             }
@@ -99,8 +103,8 @@ namespace ImageServiceWebApp.Models
             try
             {
                 LogMessage newLogEntry = new LogMessage { Type = responseObj.Args[0], Message = responseObj.Args[1] };
-                LogList.Insert(0, new LogCollection { LogType = newLogEntry.Type, Message = newLogEntry.Message });
-                
+              //  LogList.Insert(0, new LogCollection { LogType = newLogEntry.Type, Message = newLogEntry.Message });
+                stringList.Insert(0, new Tuple<string, string>(newLogEntry.Type, newLogEntry.Message ));
             }
             catch (Exception ex)
             {
