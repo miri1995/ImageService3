@@ -30,6 +30,8 @@ namespace ImageServiceWebApp.Models
             this.client.UpdateResponse += UpdateResponse;
             this.InitializeLogsParams();
 
+            this.client.UpdateResponse += UpdateResponse;
+
         }
 
 
@@ -84,7 +86,7 @@ namespace ImageServiceWebApp.Models
             {
                 foreach (LogMessage log in JsonConvert.DeserializeObject<ObservableCollection<LogMessage>>(responseObj.Args[0]))
                 {
-                 // LogList.Add(new LogCollection { LogType = log.Type, Message = log.Message });
+                  LogList.Add(new LogCollection { LogType = log.Type, Message = log.Message });
                    stringList.Add(new Tuple<string,string>(log.Type, log.Message));
                 }
             }
@@ -103,8 +105,8 @@ namespace ImageServiceWebApp.Models
             try
             {
                 LogMessage newLogEntry = new LogMessage { Type = responseObj.Args[0], Message = responseObj.Args[1] };
-              //  LogList.Insert(0, new LogCollection { LogType = newLogEntry.Type, Message = newLogEntry.Message });
-                stringList.Insert(0, new Tuple<string, string>(newLogEntry.Type, newLogEntry.Message ));
+                LogList.Insert(0, new LogCollection { LogType = newLogEntry.Type, Message = newLogEntry.Message });
+                stringList.Add( new Tuple<string, string>(responseObj.Args[0], responseObj.Args[1]));
             }
             catch (Exception ex)
             {

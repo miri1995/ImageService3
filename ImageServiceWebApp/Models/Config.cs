@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading;
 using System.Web;
 
 
@@ -17,7 +18,7 @@ namespace ImageServiceWebApp.Models
     {
         // public delegate void NotifyAboutChange();
         //  public event NotifyAboutChange Notify;
-        //  private static ImageServiceWebApp.Communication.IImageServiceClient GuiClient { get; set; }
+       
         private IImageServiceClient clien;
         public delegate void NotifyAboutChange();
         public event NotifyAboutChange Notify;
@@ -36,12 +37,13 @@ namespace ImageServiceWebApp.Models
                 this.clien = ImageServiceClient.Instance;
                 this.clien.RecieveCommand();
                 this.clien.UpdateResponse += UpdateResponse;
-                
+
                 Handlers = new ObservableCollection<string>();
                 Enabled = false;
                 string[] arr = new string[5];
                 CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, arr, "");
                 this.clien.SendCommand(request);
+                SpinWait.SpinUntil(() => Enabled);
             }
             catch (Exception ex)
             {
@@ -133,12 +135,14 @@ namespace ImageServiceWebApp.Models
                         Handlers.Add(handler);
                     }
                 }
+                Enabled = true;
             }
             catch (Exception ex)
             {
 
             }
         }
+
         //members
         [Required]
         [DataType(DataType.Text)]
@@ -167,6 +171,8 @@ namespace ImageServiceWebApp.Models
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Handlers")]
         public ObservableCollection<string> Handlers { get; set; }
+
+
 
     }
 }

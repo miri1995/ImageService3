@@ -173,7 +173,7 @@
     <Content Include="Views\Home\ImageWeb.cshtml" />
     <Content Include="Views\Home\Logs.cshtml" />
     <Content Include="Views\Home\Config.cshtml" />
-    <Content Include="Views\Home\PhotosViewer.cshtml" />
+    <Content Include="Views\Home\Photos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -187,7 +187,9 @@
       <Name>ImageService3</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Output\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

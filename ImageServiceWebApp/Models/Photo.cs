@@ -10,37 +10,51 @@ namespace ImageServiceWebApp.Models
 {
     public class Photo
     {
-        /// <summary>
-        /// constructor.
-        /// initialize new photo obj.
-        /// </summary>
-        /// <param name="imageUrl"></param>
-        public Photo(string imageUrl)
+        
+      
+        public Photo(string outputFolder)
         {
-            try
+            OutputFolder = outputFolder;
+            ListDic = new List<Dictionary<string, string>>();
+            string pathOfThumb = Path.Combine(outputFolder, "Thumbnails");
+            string[] listThumbPath = Directory.GetFiles(pathOfThumb, "*", SearchOption.AllDirectories);
+            foreach(string s in listThumbPath)
             {
-                ImageUrl = imageUrl;
-                ImageFullUrl = imageUrl.Replace(@"Thumbnails\", string.Empty);
-                Name = Path.GetFileNameWithoutExtension(ImageUrl);
-                Month = Path.GetFileNameWithoutExtension(Path.GetDirectoryName(ImageUrl));
-                Year = Path.GetFileNameWithoutExtension(Path.GetDirectoryName((Path.GetDirectoryName(ImageUrl))));
-                string strDirName;
-
-                int intLocation, intLength;
-
-                intLength = imageUrl.Length;
-                intLocation = imageUrl.IndexOf("Images");
-
-                strDirName = imageUrl.Substring(intLocation, intLength - intLocation);
-
-                ImageRelativePathThumbnail = @"~\" + strDirName;// Images\Thumbnails\" + Year + @"\" + Month + @"\" + Path.GetFileName(ImageUrl);
-                ImageRelativePath = ImageRelativePathThumbnail.Replace(@"Thumbnails\", string.Empty);
+                string orignalPath = s.Replace("Thumbnails", outputFolder);
+                string name = Path.GetFileName(orignalPath);
+               // DateTime date = GetExplorerFileDate(orignalPath);
+               // string datetime = date.ToString("MM:dd:yyyy");
+                ListDic.Add(new Dictionary<string, string> { { "name", name }, /*{ "date", datetime },*/ { "Original", orignalPath }, { "Thumbnail", s } });
             }
-            catch (Exception ex)
-            {
 
-            }
         }
+
+
+
+        static DateTime GetExplorerFileDate(string filename)
+        {
+            DateTime now = DateTime.Now;
+            TimeSpan localOffset = now - now.ToUniversalTime();
+            return File.GetLastWriteTimeUtc(filename) + localOffset;
+        }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "OutputFolder")]
+        public string OutputFolder { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "ThumbnailSize")]
+        public string ThumbnailSize { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "ListDic")]
+        public List<Dictionary<string,string>> ListDic { get; set; }
+
+
+
 
 
         //members
