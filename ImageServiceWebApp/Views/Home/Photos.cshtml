@@ -13,9 +13,8 @@
         <div class="thumbnail">
             <img class="img-circle" src="/@item["Thumbnail"].Replace(Server.MapPath("~"), "").Replace("\\", "/")" alt="Avatar">
             <div class="caption">
-                <h4>Thumbnail label</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
-               
+                <h4>@item["name"]</h4>
+            
                 @Html.ActionLink("Delete", "DeleteView", "Home", new { path = @item["Original"], year = @item["Year"], month = @item["Month"], name = @item["name"], Thumbnail=@item["Thumbnail"] }, null)
                 @Html.ActionLink("View", "ViewPhotos", "Home", new {path = @item["Original"], year=@item["Year"], month = @item["Month"], name = @item["name"] }, null)
               

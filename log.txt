@@ -1,0 +1,191 @@
+commit 12b17aa7a5791ce0a41c3ad88344270a7f066dab
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Mon Jun 11 19:46:02 2018 +0300
+
+    finishhh
+
+commit 2067983ac48c1f55484026c0bcde7c9868d37ce5
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Mon Jun 11 08:03:58 2018 +0300
+
+    handler remove
+
+commit affffb4e562f0f1cd48b2b0dddcd7e074a586379
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Sun Jun 10 22:30:02 2018 +0300
+
+    counter
+
+commit 839da805457158acb62c958e267d3f61894ce984
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Sun Jun 10 19:17:40 2018 +0300
+
+    photos
+
+commit 6c953a309132670580a34a580be0843443271a9e
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Sun Jun 10 16:55:46 2018 +0300
+
+    hg
+
+commit 973c495dcddeed96d5d0e381f957c2340ffb2bd4
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Sun Jun 10 16:13:58 2018 +0300
+
+    ll
+
+commit 8c2f2a5a299971bc92e3038b39d4f0593f16c138
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Fri Jun 8 20:18:48 2018 +0300
+
+    m
+
+commit 7a2b8615502bbfb1020bf0be33a5c7ca0720dc18
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Fri Jun 8 20:07:52 2018 +0300
+
+    m
+
+commit 36e9e4855020403de81d378ef0f345749c211658
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Fri Jun 8 20:00:39 2018 +0300
+
+    miri
+
+commit 81e96e6095c9a1e6a09a3437167d2c107c107888
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Fri Jun 8 18:51:30 2018 +0300
+
+    web
+
+commit 9b47056d5c54b85be7ed5d13cb0cbdb331a0c1cd
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Fri Jun 8 18:43:46 2018 +0300
+
+    web
+
+commit e50d40a3729acbeaec694a00cd8b0b649c8f07ff
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Sun May 27 16:05:15 2018 +0300
+
+    note
+
+commit 4619dd2f5101e3a632ae1c942fec4a3591c3c12f
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Sun May 27 15:26:31 2018 +0300
+
+    note
+
+commit fb4bfb5044e049d7c20da076d36e300a8aaa4437
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Wed May 23 13:01:33 2018 +0300
+
+    s
+
+commit 400a5ac21bcac819032f95f451ad0e42d986216b
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Wed May 23 12:54:19 2018 +0300
+
+    settings
+
+commit 7897e2b9ac8a7aeb0bcb27620625d56cd1de9a33
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Mon May 21 09:41:55 2018 +0300
+
+    settings not fixed
+
+commit 92c57b9272bfe63f9f43868ff60951e3e375fd76
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Mon May 21 09:35:42 2018 +0300
+
+    communication
+
+commit 939902e59493f24b7643d278c7f40b288d625b40
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Mon May 21 09:16:37 2018 +0300
+
+    logs converter
+
+commit 446d37974fb9f7de0c1c675af9100c87e3387539
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Mon May 21 08:25:24 2018 +0300
+
+    converter in log
+
+commit 93f1ca5e0c56fdbeda714f39b4a2fa162664ddaf
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Mon May 21 08:14:59 2018 +0300
+
+    no fixed
+
+commit 73e8e7e8741ccbcaeab09663d0f4da626a80f3b6
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Mon May 21 07:41:38 2018 +0300
+
+    check settings
+
+commit 0e95b79f124cb3adf25715b8d6cab6821ff54b11
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Thu May 17 12:12:52 2018 +0300
+
+    debug
+
+commit cf68e3026a74eb5449119fedcd11328a3199567d
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Sun May 13 15:14:10 2018 +0300
+
+    VM
+
+commit 668a4d060ab906f61458d09ce6d94c7d56076cb4
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Sun May 13 08:54:05 2018 +0300
+
+    Model APP
+
+commit ef0a4e4d3a4a9dbbeeab87f7d73fb63e7e5d6a02
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Mon May 7 19:28:31 2018 +0300
+
+    view
+
+commit 6d291721a2daa4777ccfdc440d5243006d6a5a7f
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Mon May 7 16:49:01 2018 +0300
+
+    view
+
+commit ec2154dbac25df5366ef38cf44a42912c8c85f83
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Sat Apr 14 21:40:28 2018 +0300
+
+    appconfig
+
+commit db11c2862c6a2493cabc0aaaafea89047d2d6027
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Sat Apr 14 19:26:13 2018 +0300
+
+    check project
+
+commit dee3b449bbf08d4d615ff29d48440568726fb025
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Sat Apr 14 15:56:00 2018 +0300
+
+    handler
+
+commit b0783859a5a6407e4957f6d491b086a24510bc3f
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Sat Apr 14 15:43:22 2018 +0300
+
+    handler
+
+commit d8f5ca6f114164fede66aaadcf9bbbc55cc1e190
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Fri Apr 13 16:53:15 2018 +0300
+
+    Add project files.
+
+commit 82b384fbbccc0fb1af0c70b88d78beedfe3da87e
+Author: MIRI <MIRI@DESKTOP-4CQI8LM>
+Date:   Fri Apr 13 16:53:13 2018 +0300
+
+    Add .gitignore and .gitattributes.
