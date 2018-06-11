@@ -21,13 +21,13 @@ namespace ImageServiceWebApp.Models
 
         public ImageWebInfo() {
             Counter = "";
-
+            Status = "";
            
             this.client = ImageServiceClient.Instance;
             this.client.RecieveCommand();
             this.client.UpdateResponse += UpdateResponse;
             Students = getList();
-            string[] arr = new string[1];
+            string[] arr = new string[2];
             CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.ImageWebCommand, arr, "");
             this.client.SendCommand(request);
 
@@ -66,7 +66,8 @@ namespace ImageServiceWebApp.Models
             try
             {
                 Counter = responseObj.Args[0];
-              
+                Status= responseObj.Args[1];
+
             }
             catch (Exception ex)
             {

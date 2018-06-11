@@ -16,6 +16,7 @@ namespace ImageService.Modal
         string AddFile(string path, out bool result);
       //  string getCounter(out bool result);
         string CounterImages();
-
+         string Status { get; set; }
+        
     }
 }

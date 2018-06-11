@@ -9,7 +9,9 @@ Are you sure to delete this image?
 <h3></h3>
 
 <img src="/@Model.Thumbnail.Replace(Server.MapPath("~"), "").Replace("\\", "/")" alt="Avatar">
-
+<h3></h3>
+@Html.ActionLink("Yes ", "DeletedPhoto", "Home", null)
+@Html.ActionLink("No", "Photos", "Home", null)
 
 
 @Model.Name

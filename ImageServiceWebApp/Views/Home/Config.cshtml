@@ -61,7 +61,7 @@
                 {
                 <tr>
                     <td>
-                        @Html.ActionLink(item, "DeleteHandler","home", new { toDelete = item })
+                        @Html.ActionLink(@item, "DeleteHandler","Home", new { toDelete = item },null)
                     </td>
                    
                 </tr>

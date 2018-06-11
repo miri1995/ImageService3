@@ -60,7 +60,10 @@ namespace ImageServiceWebApp.Controllers
             return View(photo_model);
         }
 
- 
+        public ActionResult DeletedPhoto()
+        {
+            return View();
+        }
 
         public ActionResult DeleteHandler(string toDelete)
         {
@@ -69,14 +72,14 @@ namespace ImageServiceWebApp.Controllers
             return View(config_model);
         }
 
-        public ActionResult DeleteView(string path, string name)
+        public ActionResult DeleteView(string path, string name, List<Dictionary<string, string>> ListDic)
         {
-            return View(new DeletePhoto(path , name));
+            return View(new DeletePhoto(path, name, ListDic));
         }
 
-        public ActionResult ViewPhotos(string path, string name/*,string date*/)
+        public ActionResult ViewPhotos(string path, string name,string year,string month)
         {
-            return View(new PhotosV(path, name/*,date*/));
+            return View(new PhotosV(path, name ,year ,month));
         }
 
         /*   public ActionResult DeleteH(string toDelete)

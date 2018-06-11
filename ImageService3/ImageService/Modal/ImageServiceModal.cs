@@ -16,13 +16,15 @@ namespace ImageService.Modal
         private string m_OutputFolder;            // The Output Folder
         private int m_thumbnailSize;              // The Size Of The Thumbnail Size
         private int counter;
+        private string status;
         #endregion
 
         #region Properties
 
-        public ImageServiceModal(string output)
+        public ImageServiceModal(string output,string status)
         {
             OutputFolder = output;
+            Status = status;
             this.counter = Int32.Parse(CounterImages());
         }
 
@@ -33,14 +35,19 @@ namespace ImageService.Modal
             return count.ToString();
         }
 
-       /* public string getCounter(out bool result) {
-            string[] arr = new string[1];
-            arr[0] = this.counter.ToString();
-            result = true;
-            return arr[0];
-        }*/
+        /* public string getCounter(out bool result) {
+             string[] arr = new string[1];
+             arr[0] = this.counter.ToString();
+             result = true;
+             return arr[0];
+         }*/
 
-       
+
+        public string Status
+        {
+            get { return this.status; }
+            set { this.status = value; }
+        }
 
         public string OutputFolder
         {

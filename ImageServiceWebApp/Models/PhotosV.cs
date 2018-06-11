@@ -8,11 +8,12 @@ namespace ImageServiceWebApp.Models
 {
     public class PhotosV
     {
-        public PhotosV(string path, string name/*string date*/)
+        public PhotosV(string path, string name,string year,string month)
         {
             Original = path;
             Name = name;
-          //  Date = date;
+            Year = year;
+            Month = month;
         }
 
         [Required]
@@ -22,8 +23,13 @@ namespace ImageServiceWebApp.Models
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Date")]
-        public string Date { get; set; }
+        [Display(Name = "Year")]
+        public string Year { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Month")]
+        public string Month { get; set; }
 
         [Required]
         [DataType(DataType.Text)]

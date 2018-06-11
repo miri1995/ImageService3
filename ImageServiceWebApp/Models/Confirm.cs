@@ -8,10 +8,14 @@ namespace ImageServiceWebApp.Models
 {
     public class Confirm
     {
+        public Confirm(string toDelete)
+        {
+            Handler = toDelete;
+        }
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "toDelete")]
-        public string toDelete { get; set; }
+        [Display(Name = "Handler")]
+        public string Handler { get; set; }
 
     }
 }

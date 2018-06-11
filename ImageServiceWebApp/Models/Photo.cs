@@ -22,21 +22,22 @@ namespace ImageServiceWebApp.Models
             {
                 string orignalPath = s.Replace("Thumbnails", outputFolder);
                 string name = Path.GetFileName(orignalPath);
-               // DateTime date = GetExplorerFileDate(orignalPath);
+             //   DateTime date = GetExplorerFileDate(orignalPath);
+                
+
+                string month = Path.GetFileNameWithoutExtension(Path.GetDirectoryName(orignalPath));
+                string year = Path.GetFileNameWithoutExtension(Path.GetDirectoryName((Path.GetDirectoryName(orignalPath))));
                // string datetime = date.ToString("MM:dd:yyyy");
-                ListDic.Add(new Dictionary<string, string> { { "name", name }, /*{ "Date", datetime },*/ { "Original", orignalPath }, { "Thumbnail", s } });
+                ListDic.Add(new Dictionary<string, string> { { "name", name }, { "Year", year }, { "Month", month }, { "Original", orignalPath }, { "Thumbnail", s } });
             }
 
         }
 
 
 
-        static DateTime GetExplorerFileDate(string filename)
-        {
-            DateTime now = DateTime.Now;
-            TimeSpan localOffset = now - now.ToUniversalTime();
-            return File.GetLastWriteTimeUtc(filename) + localOffset;
-        }
+    
+
+
 
         [Required]
         [DataType(DataType.Text)]

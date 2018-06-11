@@ -12,6 +12,7 @@ namespace ImageService.Commands
     public class ImageWebCommand : ICommand
     {
         private IImageServiceModal model;
+        
         public ImageWebCommand(IImageServiceModal model)
         {
             this.model = model;
@@ -20,8 +21,9 @@ namespace ImageService.Commands
         public string Execute(string[] args, out bool result)
         {
             result = true;
-            string[] arr = new string[1];
+            string[] arr = new string[2];
             arr[0]= this.model.CounterImages();
+            arr[1] = this.model.Status;
             CommandRecievedEventArgs commandSendArgs = new CommandRecievedEventArgs((int)CommandEnum.ImageWebCommand, arr, "");
             return JsonConvert.SerializeObject(commandSendArgs);
             

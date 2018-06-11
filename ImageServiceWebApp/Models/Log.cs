@@ -26,11 +26,12 @@ namespace ImageServiceWebApp.Models
         public Log()
         {
             this.client = ImageServiceClient.Instance;
-            this.client.RecieveCommand();
+            
             this.client.UpdateResponse += UpdateResponse;
+            this.client.RecieveCommand();
             this.InitializeLogsParams();
 
-            this.client.UpdateResponse += UpdateResponse;
+           // this.client.UpdateResponse += UpdateResponse;
 
         }
 

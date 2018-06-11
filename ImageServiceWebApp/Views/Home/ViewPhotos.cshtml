@@ -6,8 +6,14 @@
 <h2>ViewPhotos</h2>
 
 
-   <img src="/@Model.Original.Replace(Server.MapPath("~"),"").Replace("\\","/")" >
+   <img src="/@Model.Original.Replace(Server.MapPath("~"),"").Replace("\\","/")" alt="Avatar" >
 @Model.Name
+<h3></h3>
+@Html.DisplayNameFor(model => model.Year)
+ @Model.Year
+<h4></h4>
+@Html.DisplayNameFor(model => model.Month)
+@Model.Month
 
 
 }

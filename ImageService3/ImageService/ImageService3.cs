@@ -62,13 +62,13 @@ namespace ImageService3
         {
             try
             {
-                statusRun = false;
+                statusRun = true;
                 InitializeComponent();
                 //read params from app config
                 string eventSourceName = ConfigurationManager.AppSettings.Get("SourceName");
                 string logName = ConfigurationManager.AppSettings.Get("LogName");
 
-                eventLog1 = new System.Diagnostics.EventLog();
+                eventLog1 = new EventLog();
                 if (!System.Diagnostics.EventLog.SourceExists(eventSourceName))
                 {
                     System.Diagnostics.EventLog.CreateEventSource(eventSourceName, logName);
@@ -83,7 +83,7 @@ namespace ImageService3
 
                 string outPutFolder = ConfigurationManager.AppSettings.Get("OutputDir");
 
-                this.modal = new ImageServiceModal(outPutFolder)
+                this.modal = new ImageServiceModal(outPutFolder,this.statusRun.ToString())
                 {
                     OutputFolder = ConfigurationManager.AppSettings.Get("OutputDir"),
                     ThumbnailSize = Int32.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"))
@@ -182,6 +182,7 @@ namespace ImageService3
             OnStart(null);
         }
 
+       
 
         /// <summary>
         /// OnTimer function.
