@@ -87,7 +87,7 @@ namespace ImageServiceWebApp.Models
             {
                 foreach (LogMessage log in JsonConvert.DeserializeObject<ObservableCollection<LogMessage>>(responseObj.Args[0]))
                 {
-                  LogList.Add(new LogCollection { LogType = log.Type, Message = log.Message });
+                 // LogList.Add(new LogCollection { LogType = log.Type, Message = log.Message });
                    stringList.Add(new Tuple<string,string>(log.Type, log.Message));
                 }
             }

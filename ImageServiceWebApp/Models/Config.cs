@@ -18,7 +18,7 @@ namespace ImageServiceWebApp.Models
     {
         // public delegate void NotifyAboutChange();
         //  public event NotifyAboutChange Notify;
-       
+
         private IImageServiceClient clien;
         public delegate void NotifyAboutChange();
         public event NotifyAboutChange Notify;

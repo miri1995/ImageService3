@@ -31,17 +31,11 @@ namespace ImageService.Modal
         public string CounterImages()
         {
            
-            int count = Directory.GetFiles(OutputFolder, "*", SearchOption.AllDirectories).Length;
+            int count = Directory.GetFiles(OutputFolder, "*", SearchOption.AllDirectories).Length/2;
             return count.ToString();
         }
 
-        /* public string getCounter(out bool result) {
-             string[] arr = new string[1];
-             arr[0] = this.counter.ToString();
-             result = true;
-             return arr[0];
-         }*/
-
+       
 
         public string Status
         {

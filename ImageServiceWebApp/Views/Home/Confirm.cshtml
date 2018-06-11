@@ -1,10 +1,11 @@
-﻿@model ImageServiceWebApp.Models.Confirm
+﻿@model ImageServiceWebApp.Models.Config
+
 @{
     ViewBag.Title = "Confirm";
 
 }
 
 <h2>Are you sure you want to delete the handler?</h2>
+@Html.ActionLink("Yes", "Deleted", "Home", null)
+@Html.ActionLink("No", "Config", "Home", null)
 
-<button type="button" id="btnOK" style="margin:10px">OK</button>
-<button type="button" id="btnCancel" style="margin:10px">Cancel</button>

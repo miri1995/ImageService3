@@ -88,9 +88,12 @@ namespace ImageServiceWebApp.Communication
                 BinaryWriter writer = new BinaryWriter(stream);
                 // Send data to server
                 Console.WriteLine($"Send {jsonCommand} to Server");
+                bool Enabled = false;
                 m_mutex.WaitOne();
+                //SpinWait.SpinUntil(() => Enabled);
                 writer.Write(jsonCommand);
                 m_mutex.ReleaseMutex();
+               
             }
             catch (Exception ex)
             {

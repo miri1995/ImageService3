@@ -57,11 +57,11 @@
                     @Html.DisplayNameFor(model => model.Handlers)
                 </th>
             </tr>
-            @foreach (var item in Model.Handlers)
+            @foreach (string item in Model.Handlers)
                 {
                 <tr>
                     <td>
-                        @Html.ActionLink(@item, "DeleteHandler","Home", new { toDelete = item },null)
+                        @Html.ActionLink(@item, "DeleteHandler", "Home", new { toDelete = @item }, null)
                     </td>
                    
                 </tr>

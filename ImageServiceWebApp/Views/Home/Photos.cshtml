@@ -7,7 +7,7 @@
 
 
 
-@foreach (var item in Model.ListDic)
+@foreach (Dictionary<string, string> item in Model.ListDic)
 {
     <div class="col-xs-18 col-sm-6 col-md-3">
         <div class="thumbnail">
@@ -15,8 +15,8 @@
             <div class="caption">
                 <h4>Thumbnail label</h4>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
-                <p><a href="#" class="btn btn-info btn-xs" role="button">View</a> <a href="#" class="btn btn-default btn-xs" role="button">Delete</a></p>
-                @Html.ActionLink("Delete", "DeleteView", "Home", new { path =@item["Thumbnail"], name =@item["name"]}, null)
+               
+                @Html.ActionLink("Delete", "DeleteView", "Home", new { path = @item["Original"], year = @item["Year"], month = @item["Month"], name = @item["name"], Thumbnail=@item["Thumbnail"] }, null)
                 @Html.ActionLink("View", "ViewPhotos", "Home", new {path = @item["Original"], year=@item["Year"], month = @item["Month"], name = @item["name"] }, null)
               
             </div>

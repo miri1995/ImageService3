@@ -6,24 +6,23 @@ using System.Web;
 
 namespace ImageServiceWebApp.Models
 {
-    public class DeletePhoto
+    public class DeleteView
     {
 
        
-        public DeletePhoto(string path, string name, List<Dictionary<string, string>> ListDic)
+        public DeleteView(string path, string name, Dictionary<string, string> dict)
         {
            
             Thumbnail = path;
             Name = name;
-          /*  foreach (Dictionary<string, string> d in ListDic)
-            {
-                if (name == d["name"])
-                {
-                    ListDic.Remove(d);
-                }
-
-            }*/
+            Dict = dict;
+          
         }
+
+       /* private void DeleteImage()
+        {
+
+        }*/
 
         [Required]
         [DataType(DataType.Text)]
@@ -35,6 +34,11 @@ namespace ImageServiceWebApp.Models
         [Display(Name = "Name")]
         public string Name { get; set; }
 
-       
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Dict")]
+        public Dictionary<string, string> Dict { get; set; }
+
+
     }
 }
