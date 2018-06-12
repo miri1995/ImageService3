@@ -43,11 +43,6 @@ namespace ImageServiceWebApp.Controllers
 
         }
 
-        // GET: Home
-      /*  public ActionResult Index()
-        {
-            return View();
-        }*/
 
         //GET: ImageWeb
         public ActionResult ImageWeb()
@@ -87,7 +82,7 @@ namespace ImageServiceWebApp.Controllers
         {
             //delete the handler
             config_model.DeleteHandler(m_toDelete);
-          //  Thread.Sleep(500);
+            Thread.Sleep(400);
             return RedirectToAction("Config");
 
         }
@@ -111,6 +106,7 @@ namespace ImageServiceWebApp.Controllers
         public ActionResult DeletedPhoto()
         {
             photo_model.DeleteImage(m_name, m_path, m_month, m_Thumbnail, m_year);
+            Thread.Sleep(400);
             return RedirectToAction("Photos");
         }
 

@@ -15,9 +15,9 @@
             <div class="caption">
                 <h4>@item["name"]</h4>
             
-                @Html.ActionLink("Delete", "DeleteView", "Home", new { path = @item["Original"], year = @item["Year"], month = @item["Month"], name = @item["name"], Thumbnail=@item["Thumbnail"] }, null)
-                @Html.ActionLink("View", "ViewPhotos", "Home", new {path = @item["Original"], year=@item["Year"], month = @item["Month"], name = @item["name"] }, null)
-              
+               
+                @Html.ActionLink("View ", "ViewPhotos", "Home", new {path = @item["Original"], year=@item["Year"], month = @item["Month"], name = @item["name"] }, null)
+                @Html.ActionLink("Delete", "DeleteView", "Home", new { path = @item["Original"], year = @item["Year"], month = @item["Month"], name = @item["name"], Thumbnail = @item["Thumbnail"] }, null)
             </div>
         </div>
     </div>
