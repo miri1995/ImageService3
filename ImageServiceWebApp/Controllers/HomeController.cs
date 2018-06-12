@@ -82,7 +82,7 @@ namespace ImageServiceWebApp.Controllers
         {
             //delete the handler
             config_model.DeleteHandler(m_toDelete);
-            Thread.Sleep(700);
+            Thread.Sleep(1000);
             return RedirectToAction("Config");
 
         }
@@ -106,7 +106,7 @@ namespace ImageServiceWebApp.Controllers
         public ActionResult DeletedPhoto()
         {
             photo_model.DeleteImage(m_name, m_path, m_month, m_Thumbnail, m_year);
-            Thread.Sleep(700);
+            Thread.Sleep(1000);
             return RedirectToAction("Photos");
         }
 
