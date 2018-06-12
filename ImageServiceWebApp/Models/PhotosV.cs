@@ -23,17 +23,17 @@ namespace ImageServiceWebApp.Models
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Year")]
+        [Display(Name = "Year:")]
         public string Year { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Month")]
+        [Display(Name = "Month:")]
         public string Month { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Name")]
+        [Display(Name = "Name:")]
         public string Name { get; set; }
     }
 }

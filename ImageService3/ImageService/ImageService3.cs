@@ -105,6 +105,7 @@ namespace ImageService3
             }
             catch (Exception e)
             {
+                statusRun = false;
                 this.eventLog1.WriteEntry(e.ToString(), EventLogEntryType.Error);
             }
         }

@@ -31,7 +31,7 @@ namespace ImageServiceWebApp.Models
             this.client.RecieveCommand();
             this.InitializeLogsParams();
 
-           // this.client.UpdateResponse += UpdateResponse;
+       
 
         }
 

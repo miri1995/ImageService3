@@ -7,14 +7,17 @@
 
 
    <img src="/@Model.Original.Replace(Server.MapPath("~"),"").Replace("\\","/")" alt="Avatar" >
-@Model.Name
 <h3></h3>
+@Html.DisplayNameFor(model => model.Name)
+
+@Model.Name
+<h4></h4>
 @Html.DisplayNameFor(model => model.Year)
  @Model.Year
-<h4></h4>
+<h5></h5>
 @Html.DisplayNameFor(model => model.Month)
 @Model.Month
-<h5></h5>
+<h6></h6>
 @Html.ActionLink("Back to photos", "Photos", "Home", null)
 
 

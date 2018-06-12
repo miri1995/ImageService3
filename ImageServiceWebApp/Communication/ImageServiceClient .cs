@@ -79,8 +79,8 @@ namespace ImageServiceWebApp.Communication
         /// <param name="commandRecievedEventArgs">info to be sented to server</param>
         public void SendCommand(CommandRecievedEventArgs commandRecievedEventArgs)
         {
-            //new Task(() =>
-            //{
+           // new Task(() =>
+          //  {
             try
             {
                 string jsonCommand = JsonConvert.SerializeObject(commandRecievedEventArgs);
@@ -88,7 +88,7 @@ namespace ImageServiceWebApp.Communication
                 BinaryWriter writer = new BinaryWriter(stream);
                 // Send data to server
                 Console.WriteLine($"Send {jsonCommand} to Server");
-                bool Enabled = false;
+             //   bool Enabled = false;
                 m_mutex.WaitOne();
                 //SpinWait.SpinUntil(() => Enabled);
                 writer.Write(jsonCommand);
@@ -99,7 +99,7 @@ namespace ImageServiceWebApp.Communication
             {
 
             }
-            //}).Start();
+           // }).Start();
         }
 
         /// <summary>
