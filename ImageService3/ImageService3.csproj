@@ -107,6 +107,7 @@
     <Compile Include="ImageService\Server\ImageServer.cs" />
     <Compile Include="ImageService\Server\ITcpServer.cs" />
     <Compile Include="ImageService\Server\TcpServer.cs" />
+    <Compile Include="ImageService\Server\TcpClientAndroid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>

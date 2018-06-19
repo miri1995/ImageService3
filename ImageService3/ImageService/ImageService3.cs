@@ -26,6 +26,7 @@ namespace ImageService3
         private IImageController controller;
         private ILoggingService logging;
         private TcpServer tcpServer;
+      
         private List<Tuple<string, bool>> loggsMessages;
         private bool statusRun;
 
@@ -94,14 +95,19 @@ namespace ImageService3
                 this.m_imageServer = new ImageServer(controller, logging);
                 this.controller.ImageServer = m_imageServer;
                 IClientHandler ch = new ClientHandler(controller, logging);
+
                 int port = 8000;
-              
                 tcpServer = new TcpServer(port, logging, ch);
                 ImageServer.NotifyAllHandlerRemoved += tcpServer.NotifyAllClientsAboutUpdate;
-                this.logging.UpdateLogEntries += tcpServer.NotifyAllClientsAboutUpdate;
-            
-                tcpServer.Start();
-               
+                 this.logging.UpdateLogEntries += tcpServer.NotifyAllClientsAboutUpdate;
+                 tcpServer.Start();
+
+                //android
+                int port2 = 7999;
+                IClientHandler tcpClientHandler = new TcpClientAndroid(controller, logging);
+                ITcpServer tcpServer2 = new TcpServer(port2, logging, tcpClientHandler);
+                tcpServer2.Start();
+
             }
             catch (Exception e)
             {
@@ -162,6 +168,7 @@ namespace ImageService3
             {
                 this.logging.InvokeUpdateEvent("onStop", MessageTypeEnum.INFO);
             }
+          
             this.tcpServer.Stop();
         }
         /// <summary>

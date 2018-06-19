@@ -14,7 +14,10 @@
             <img class="img-circle" src="/@item["Thumbnail"].Replace(Server.MapPath("~"), "").Replace("\\", "/")" alt="Avatar">
             <div class="caption">
                 <h4>@item["name"]</h4>
-            
+                <h5>Year: 
+                 @item["Year"] </h5>
+                <h6>Month: 
+                @item["Month"]</h6>
                
                 @Html.ActionLink("View ", "ViewPhotos", "Home", new {path = @item["Original"], year=@item["Year"], month = @item["Month"], name = @item["name"] }, null)
                 @Html.ActionLink("Delete", "DeleteView", "Home", new { path = @item["Original"], year = @item["Year"], month = @item["Month"], name = @item["name"], Thumbnail = @item["Thumbnail"] }, null)
